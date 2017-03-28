@@ -15,6 +15,9 @@ ETH_ADDRESS=0xda0aed568d9a2dbdcbafc1576fedc633d28eee9a
 curl https://api.tokenbalance.com/balance/$CONTRACT/$ETH_ADDRESS
 ```
 
+![Screen1](http://i.imgur.com/252w4tG.png)
+
+
 #### Response
 ```bash
 {
@@ -30,6 +33,3 @@ curl https://api.tokenbalance.com/balance/$CONTRACT/$ETH_ADDRESS
 <p align="center">
   <img width="420" src="https://github.com/hunterlong/tokenbalance.com/blob/master/images/website.png?raw=true" alt="tokenbalance eth token contracts"/>
 </p>
-
-
-![Screen1](http://i.imgur.com/252w4tG.png)
