@@ -1,7 +1,7 @@
 ![TokenBalance](http://i.imgur.com/43Blvht.jpg)
 
-# TokenBalance
-Fetch the balance of a token on the ethereum network.
+# TokenBalance Server
+Connects to your local geth IPC and prints out a simple JSON response for ethereum token balances. Runs on port *19705*. Fetch the balance of a token on the ethereum network.
 
 ```bash
 https://api.tokenbalance.com/balance/CONTRACT_HERE/ETHER_ADDRESS
