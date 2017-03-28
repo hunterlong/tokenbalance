@@ -1,15 +1,13 @@
 package main
 
 import (
-	"log"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/ethclient"
+	"log"
 	"math"
 )
 
-
 var conn *ethclient.Client
-
 
 func init() {
 
@@ -31,7 +29,7 @@ func init() {
 
 }
 
-func GetAccount(contract string, wallet string) (string, float64, string, uint8) {
+func GetAccount(contract string, wallet string) (string, float64, string, uint8, float64) {
 	var err error
 
 	token, err := NewTokenCaller(common.HexToAddress(contract), conn)
@@ -45,14 +43,19 @@ func GetAccount(contract string, wallet string) (string, float64, string, uint8)
 	decimals, err := token.Decimals(nil)
 	name, err := token.Name(nil)
 
+	ethAmount, err := conn.BalanceAt(nil,common.HexToAddress(contract),nil)
+
 	if err != nil {
 		log.Fatalf("Failed to retrieve token name: %v", err)
 	}
 
-	z := math.Pow(0.1,float64(decimals))
+	z := math.Pow(0.1, float64(decimals))
 	newBalance := float64(balance.Int64()) * z
 
-	return name, newBalance, symbol, decimals
+	q := math.Pow(0.1, 10)
+	newEthBalance := float64(ethAmount.Int64()) * q
+
+	return name, newBalance, symbol, decimals, newEthBalance
 
 }
 
@@ -62,5 +65,5 @@ func round(num float64) int {
 
 func toFixed(num float64, precision int) float64 {
 	output := math.Pow(10, float64(precision))
-	return float64(round(num * output)) / output
+	return float64(round(num*output)) / output
 }
