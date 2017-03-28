@@ -2,7 +2,7 @@
 build:
   # Path to main.go file or main package.
   # Default is `.`
-  main: ./main.go
+  main: ./
 
   # Name of the binary.
   # Default is the name of the project directory.
@@ -22,6 +22,7 @@ build:
   goos:
     - freebsd
     - windows
+    - linux
 
   # GOARCH to build in.
   # For more info refer to https://golang.org/doc/install/source#environment

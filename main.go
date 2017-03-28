@@ -14,7 +14,7 @@ func init() {
 	var err error
 	// Create an IPC based RPC connection to a remote node
 
-	conn, err = ethclient.Dial("/root/.ethereum/geth.ipc")
+	conn, err = ethclient.Dial("/Users/hunter/Library/Ethereum/geth.ipc")
 	if err != nil {
 		log.Fatalf("Failed to connect to the Ethereum client: %v", err)
 	}
@@ -43,7 +43,7 @@ func GetAccount(contract string, wallet string) (string, float64, string, uint8,
 	decimals, err := token.Decimals(nil)
 	name, err := token.Name(nil)
 
-	ethAmount, err := conn.BalanceAt(nil,common.HexToAddress(contract),nil)
+	ethAmount := 0
 
 	if err != nil {
 		log.Fatalf("Failed to retrieve token name: %v", err)
@@ -53,7 +53,7 @@ func GetAccount(contract string, wallet string) (string, float64, string, uint8,
 	newBalance := float64(balance.Int64()) * z
 
 	q := math.Pow(0.1, 10)
-	newEthBalance := float64(ethAmount.Int64()) * q
+	newEthBalance := float64(ethAmount) * q
 
 	return name, newBalance, symbol, decimals, newEthBalance
 
