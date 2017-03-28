@@ -16,7 +16,7 @@ func init() {
 	var err error
 	// Create an IPC based RPC connection to a remote node
 
-	conn, err = ethclient.Dial("/Users/hunter/Library/Ethereum/geth.ipc")
+	conn, err = ethclient.Dial("/root/.ethereum/geth.ipc")
 	if err != nil {
 		log.Fatalf("Failed to connect to the Ethereum client: %v", err)
 	}
