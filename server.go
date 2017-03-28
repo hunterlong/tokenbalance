@@ -45,6 +45,8 @@ func main() {
 	r := mux.NewRouter()
 	r.HandleFunc("/balance/{contract}/{wallet}", getMembersHandler).Methods("GET")
 
+	fmt.Println("Server Running: 0.0.0.0:19705")
+
 	http.Handle("/", r)
 	http.ListenAndServe("0.0.0.0:19705", nil)
 }
