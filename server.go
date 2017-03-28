@@ -46,6 +46,6 @@ func main() {
 	r.HandleFunc("/balance/{contract}/{wallet}", getMembersHandler).Methods("GET")
 
 	http.Handle("/", r)
-	http.ListenAndServe("127.0.0.1:19705", nil)
+	http.ListenAndServe("0.0.0.0:19705", nil)
 }
 
