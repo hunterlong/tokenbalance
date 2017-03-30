@@ -1,0 +1,13 @@
+language: go
+
+os:
+  - linux
+
+go:
+  - 1.7
+  - 1.8
+
+script:
+  - env GOOS=linux GOARCH=amd64 go build .
+  - env GOOS=darwin GOARCH=amd64 go build .
+  - env GOOS=windows GOARCH=386 go build .
