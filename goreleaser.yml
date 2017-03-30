@@ -2,7 +2,7 @@
 build:
   # Path to main.go file or main package.
   # Default is `.`
-  main: ./
+  main: .
 
   # Name of the binary.
   # Default is the name of the project directory.
@@ -20,7 +20,7 @@ build:
   # For more info refer to https://golang.org/doc/install/source#environment
   # Defaults are darwin and linux
   goos:
-    - freebsd
+    - darwin
     - windows
     - linux
 
