@@ -1,16 +1,15 @@
 // This file is an automatically generated Go binding. Do not modify as any
 // change will likely be lost upon the next re-generation!
 
-package main
+package tokenbalance
 
 import (
-	"math/big"
-	"strings"
-
 	"github.com/ethereum/go-ethereum/accounts/abi"
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/types"
+	"math/big"
+	"strings"
 )
 
 // TokenABI is the input ABI used to generate the binding from.
