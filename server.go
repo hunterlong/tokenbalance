@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/gorilla/mux"
-	"net/http"
 	"github.com/mkideal/cli"
+	"net/http"
 )
 
 type BalanceResponse struct {
@@ -41,15 +41,12 @@ func getMembersHandler(w http.ResponseWriter, r *http.Request) {
 	w.Write(j)
 }
 
-
-
 type argT struct {
 	cli.Helper
-	Geth  string    `cli:"g,geth" usage:"geth IPC location" dft:"~/.ethereum/geth.ipc"`
-	IP    string `cli:"ip" usage:"Bind to IP Address" dft:"0.0.0.0"`
-	Port    string `cli:"p,port" usage:"HTTP port for JSON" dft:"19705"`
+	Geth string `cli:"g,geth" usage:"geth IPC location" dft:"~/.ethereum/geth.ipc"`
+	IP   string `cli:"ip" usage:"Bind to IP Address" dft:"0.0.0.0"`
+	Port string `cli:"p,port" usage:"HTTP port for JSON" dft:"19705"`
 }
-
 
 func main() {
 
@@ -65,14 +62,12 @@ func main() {
 
 }
 
-
 func StartServer() {
-
 
 	r := mux.NewRouter()
 	r.HandleFunc("/balance/{contract}/{wallet}", getMembersHandler).Methods("GET")
 
-	fmt.Println("TokenBalance Server Running: "+UseIP+":"+UsePort)
+	fmt.Println("TokenBalance Server Running: " + UseIP + ":" + UsePort)
 
 	http.Handle("/", r)
 	http.ListenAndServe(UseIP+":"+UsePort, nil)

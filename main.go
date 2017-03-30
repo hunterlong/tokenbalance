@@ -9,7 +9,6 @@ import (
 
 var conn *ethclient.Client
 
-
 var GethLocation string
 var UsePort string
 var UseIP string
