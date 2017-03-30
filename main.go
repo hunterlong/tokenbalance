@@ -9,7 +9,12 @@ import (
 
 var conn *ethclient.Client
 
-func init() {
+
+var GethLocation string
+var UsePort string
+var UseIP string
+
+func ConnectGeth() {
 
 	var err error
 	// Create an IPC based RPC connection to a remote node
@@ -20,7 +25,7 @@ func init() {
 	// LINUX: /root/.ethereum/geth.ipc
 	//
 
-	conn, err = ethclient.Dial("/root/.ethereum/geth.ipc")
+	conn, err = ethclient.Dial(GethLocation)
 	if err != nil {
 		log.Fatalf("Failed to connect to the Ethereum client: %v", err)
 	}

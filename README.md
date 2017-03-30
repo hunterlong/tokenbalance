@@ -3,6 +3,14 @@
 # TokenBalance Server
 Connects to your local geth IPC and prints out a simple JSON response for ethereum token balances. Runs on port *19705*. Fetch the balance of a token on the ethereum network.
 
+#### Run Your Own Server
+```bash
+tokenbalance --geth="/ethereum/geth.ipc" --port 8888 --ip 127.0.0.1
+```
+This will create a light weight HTTP server will respond balance information about a ethereum contract token.
+
+
+#### Use TokenBalance's Sever
 ```bash
 https://api.tokenbalance.com/balance/CONTRACT_HERE/ETHER_ADDRESS
 ```
