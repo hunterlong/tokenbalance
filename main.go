@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/ethclient"
 	"log"
@@ -16,7 +17,6 @@ var UseIP string
 func ConnectGeth() {
 
 	var err error
-	// Create an IPC based RPC connection to a remote node
 
 	//
 	// MAC: /Users/username/Library/Ethereum/geth.ipc
@@ -27,45 +27,69 @@ func ConnectGeth() {
 	conn, err = ethclient.Dial(GethLocation)
 	if err != nil {
 		log.Fatalf("Failed to connect to the Ethereum client: %v", err)
+	} else {
+		log.Println("Connected to Geth at: ", GethLocation)
 	}
-
-	// CJX
-	//reqAddress := "0x38122af92aa2819Cdb2bE029f2Fa325959B52Ec8";
-	//reqContract := "0x2ce349291b8365f8d12c4cedf992969f680c726e";
-
-	// DAO
-	//reqAddress := "0x21314ff1669aced72b3c72ad912102186cf5e1cd";
-	//reqContract := "0x48c80F1f4D53D5951e5D5438B54Cba84f29F32a5";
 
 }
 
-func GetAccount(contract string, wallet string) (string, float64, string, uint8, float64) {
+func GetAccount(contract string, wallet string) (string, float64, string, uint8, float64, uint64, error) {
 	var err error
 
 	token, err := NewTokenCaller(common.HexToAddress(contract), conn)
 	if err != nil {
-		log.Fatalf("Failed to instantiate a Token contract: %v", err)
+		log.Println("Failed to instantiate a Token contract: %v", err)
+		return "error", 0, "error", 0, 0, 0, err
 	}
 
-	address := common.HexToAddress(wallet)
-	balance, err := token.BalanceOf(nil, address)
-	symbol, err := token.Symbol(nil)
-	decimals, err := token.Decimals(nil)
-	name, err := token.Name(nil)
-
-	ethAmount := 0
-
+	getBlock, err := conn.BlockByNumber(context.Background(), nil)
 	if err != nil {
-		log.Fatalf("Failed to retrieve token name: %v", err)
+		log.Println("Failed to get current block number: ", err)
+		return "error", 0, "error", 0, 0, 0, err
+	}
+
+	maxBlock := getBlock.NumberU64()
+
+	address := common.HexToAddress(wallet)
+	if err != nil {
+		log.Println("Failed hex address: "+wallet, err)
+		return "error", 0, "error", 0, 0, 0, err
+	}
+
+	ethAmount, err := conn.BalanceAt(context.Background(), address, nil)
+	if err != nil {
+		log.Println("Failed to get ethereum balance from address: ", address, err)
+		return "error", 0, "error", 0, 0, 0, err
+	}
+
+	balance, err := token.BalanceOf(nil, address)
+	if err != nil {
+		log.Println("Failed to get balance from contract: "+contract, err)
+		return "error", 0, "error", 0, 0, 0, err
+	}
+	symbol, err := token.Symbol(nil)
+	if err != nil {
+		log.Println("Failed to get symbol from contract: "+contract, err)
+		return "error", 0, "error", 0, 0, 0, err
+	}
+	decimals, err := token.Decimals(nil)
+	if err != nil {
+		log.Println("Failed to get decimals from contract: "+contract, err)
+		return "error", 0, "error", 0, 0, 0, err
+	}
+	name, err := token.Name(nil)
+	if err != nil {
+		log.Println("Failed to retrieve token name from contract: "+contract, err)
+		return "error", 0, "error", 0, 0, 0, err
 	}
 
 	z := math.Pow(0.1, float64(decimals))
 	newBalance := float64(balance.Int64()) * z
 
-	q := math.Pow(0.1, 10)
-	newEthBalance := float64(ethAmount) * q
+	q := math.Pow(0.1, 18)
+	newEthBalance := float64(ethAmount.Int64()) * q
 
-	return name, newBalance, symbol, decimals, newEthBalance
+	return name, newBalance, symbol, decimals, newEthBalance, maxBlock, err
 
 }
 
