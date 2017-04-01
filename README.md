@@ -4,6 +4,27 @@
 Connects to your local geth IPC and prints out a simple JSON response for ethereum token balances. Runs on port *19705*. Fetch the balance of a token on the ethereum network.
 
 #### Run Your Own Server
+
+# Installation
+#### Ubuntu 14.04/16.04 and Debian
+```bash
+wget -qO - https://deb.packager.io/key | sudo apt-key add -
+echo "deb https://deb.packager.io/gh/hunterlong/tokenbalance trusty master" | sudo tee /etc/apt/sources.list.d/tokenbalance.list
+sudo apt-get update
+sudo apt-get install tokenbalance
+```
+
+#### CentOS
+```bash
+sudo rpm --import https://rpm.packager.io/key
+echo "[tokenbalance]
+name=Repository for hunterlong/tokenbalance application.
+baseurl=https://rpm.packager.io/gh/hunterlong/tokenbalance/centos6/master
+enabled=1" | sudo tee /etc/yum.repos.d/tokenbalance.repo
+sudo yum install tokenbalance
+```
+
+# Run Server
 ```bash
 tokenbalance --geth="/ethereum/geth.ipc" --port 8888 --ip 127.0.0.1
 ```
