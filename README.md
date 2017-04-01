@@ -9,6 +9,7 @@ Connects to your local geth IPC and prints out a simple JSON response for ethere
 ```bash
 git clone https://github.com/hunterlong/tokenbalance
 cd tokenbalance
+go get -u
 go build .
 ```
 
