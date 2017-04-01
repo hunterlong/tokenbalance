@@ -1,4 +1,4 @@
-package tokenbalance
+package main
 
 import (
 	"encoding/json"

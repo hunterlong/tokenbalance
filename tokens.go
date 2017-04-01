@@ -1,7 +1,7 @@
 // This file is an automatically generated Go binding. Do not modify as any
 // change will likely be lost upon the next re-generation!
 
-package tokenbalance
+package main
 
 import (
 	"github.com/ethereum/go-ethereum/accounts/abi"
