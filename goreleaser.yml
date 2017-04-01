@@ -20,6 +20,8 @@ build:
   # Defaults are darwin and linux
   goos:
     - darwin
+    - linux
+    - windows
 
   # GOARCH to build in.
   # For more info refer to https://golang.org/doc/install/source#environment
