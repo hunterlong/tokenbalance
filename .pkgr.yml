@@ -1,1 +1,2 @@
-cli: bin/tokenbalance
+buildpack: https://github.com/heroku/heroku-buildpack-go.git
+cli: tokenbalance
