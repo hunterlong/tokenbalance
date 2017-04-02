@@ -1,1 +1,3 @@
 cli: false
+after:
+  - mv bin/tokenbalance tokenbalance
