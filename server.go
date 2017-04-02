@@ -3,7 +3,6 @@ package main
 import (
 	"encoding/json"
 	"github.com/gorilla/mux"
-	"github.com/mkideal/cli"
 	"log"
 	"net/http"
 )
@@ -30,7 +29,7 @@ func getMembersHandler(w http.ResponseWriter, r *http.Request) {
 	contract := vars["contract"]
 	wallet := vars["wallet"]
 
-	log.Println("Fetching Wallet: ", wallet, "at contract:", contract)
+	log.Println("Fetching Wallet:", wallet, "at Contract:", contract)
 
 	name, balance, token, decimals, ethAmount, block, err := GetAccount(contract, wallet)
 
@@ -61,35 +60,13 @@ func getMembersHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-type argT struct {
-	cli.Helper
-	Geth string `cli:"g,geth" usage:"geth IPC location" dft:"~/.ethereum/geth.ipc"`
-	IP   string `cli:"ip" usage:"Bind to IP Address" dft:"0.0.0.0"`
-	Port string `cli:"p,port" usage:"HTTP port for JSON" dft:"19705"`
-}
-
-func main() {
-
-	cli.Run(new(argT), func(ctx *cli.Context) error {
-		argv := ctx.Argv().(*argT)
-		GethLocation = argv.Geth
-		UsePort = argv.Port
-		UseIP = argv.IP
-		ConnectGeth()
-		StartServer()
-		return nil
-	})
-
-}
-
 func StartServer() {
 
 	r := mux.NewRouter()
+	r.HandleFunc("/", getMembersHandler).Methods("GET")
 	r.HandleFunc("/balance/{contract}/{wallet}", getMembersHandler).Methods("GET")
 
-	log.Println("TokenBalance Server Running: " + UseIP + ":" + UsePort)
-
-	log.Println("Try it out! Go to: http://" + UseIP + ":" + UsePort + "/balance/0xa74476443119A942dE498590Fe1f2454d7D4aC0d/0xda0aed568d9a2dbdcbafc1576fedc633d28eee9a")
+	log.Println("TokenBalance Server Running: http://" + UseIP + ":" + UsePort)
 
 	http.Handle("/", r)
 	http.ListenAndServe(UseIP+":"+UsePort, nil)

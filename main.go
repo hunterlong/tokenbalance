@@ -2,10 +2,13 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/ethclient"
+	"github.com/mkideal/cli"
 	"log"
 	"math"
+	"os"
 )
 
 var conn *ethclient.Client
@@ -13,20 +16,89 @@ var conn *ethclient.Client
 var GethLocation string
 var UsePort string
 var UseIP string
+var version string = "v0.0.1"
+
+var help = cli.HelpCommand("display help information")
+
+func main() {
+
+	if err := cli.Root(root,
+		cli.Tree(help),
+		cli.Tree(child),
+		cli.Tree(versionCli),
+	).Run(os.Args[1:]); err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
+	}
+
+}
+
+type rootT struct {
+	cli.Helper
+}
+
+var root = &cli.Command{
+	Desc: "\n      #######################\n" +
+		"           TokenBalance\n" +
+		"      #######################\n\n" +
+		"TokenBalance is an easy to use server that \n" +
+		"give you your ERC20 token balance without \n" +
+		"any troubles. Connects to your local geth \n" +
+		"IPC and prints out a simple JSON response \n" +
+		"for ethereum token balances.",
+	// Argv is a factory function of argument object
+	// ctx.Argv() is if Command.Argv == nil or Command.Argv() is nil
+	Argv: func() interface{} { return new(rootT) },
+	Fn: func(ctx *cli.Context) error {
+
+		ctx.String("To start the tokenbalance server, use command:\ntokenbalance --geth \"/root/ethereum/geth.ipc\" --port 8080 --ip 0.0.0.0\n * replace geth location with your own *\n")
+		return nil
+	},
+}
+
+// child command
+type childT struct {
+	cli.Helper
+}
+
+var child = &cli.Command{
+	Name: "start",
+	Desc: "run the tokenbalance http server",
+	Argv: func() interface{} { return new(argT) },
+	Fn: func(ctx *cli.Context) error {
+		argv := ctx.Argv().(*argT)
+		GethLocation = argv.Geth
+		UsePort = argv.Port
+		UseIP = argv.IP
+		ConnectGeth()
+		StartServer()
+
+		return nil
+	},
+}
+
+var versionCli = &cli.Command{
+	Name: "version",
+	Desc: "get the version of tokenbalance server",
+	Argv: func() interface{} { return new(argT) },
+	Fn: func(ctx *cli.Context) error {
+		ctx.String(version + "\n")
+		return nil
+	},
+}
+
+type argT struct {
+	cli.Helper
+	Geth string `cli:"*g,geth" usage:"geth IPC location"`
+	IP   string `cli:"ip" usage:"Bind to IP Address" dft:"0.0.0.0"`
+	Port string `cli:"p,port" usage:"HTTP port for JSON" dft:"8080"`
+}
 
 func ConnectGeth() {
-
 	var err error
-
-	//
-	// MAC: /Users/username/Library/Ethereum/geth.ipc
-	//
-	// LINUX: /root/.ethereum/geth.ipc
-	//
-
 	conn, err = ethclient.Dial(GethLocation)
 	if err != nil {
-		log.Fatalf("Failed to connect to the Ethereum client: %v", err)
+		log.Fatalln("Failed to connect to the Ethereum client: %v", err)
 	} else {
 		log.Println("Connected to Geth at: ", GethLocation)
 	}

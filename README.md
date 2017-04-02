@@ -2,7 +2,7 @@
 
 # TokenBalance Server
 TokenBalance is an easy to use application to give you your ERC20 token balance without any troubles.
-Connects to your local geth IPC and prints out a simple JSON response for ethereum token balances. Runs on port *19705*. Fetch the balance of a token on the ethereum network.
+Connects to your local geth IPC and prints out a simple JSON response for ethereum token balances. Runs on port *8080*. Fetch the balance of a token on the ethereum network.
 
 ## TokenBalance API
 ```bash
@@ -32,9 +32,14 @@ sudo apt-get install tokenbalance
 
 ## Run Your Own Server
 ```bash
-tokenbalance --geth="/ethereum/geth.ipc" --port 19705 --ip 127.0.0.1
+tokenbalance start --geth="/ethereum/geth.ipc"
 ```
 This will create a light weight HTTP server will respond balance information about a ethereum contract token.
+
+## Optional Config
+```bash
+tokenbalance start --geth="/ethereum/geth.ipc" --port 19705 --ip 127.0.0.1
+```
 
 #### CURL Request
 ```bash
