@@ -8,13 +8,13 @@ import (
 )
 
 type BalanceResponse struct {
-	Name       string  `json:"name,omitempty"`
-	Wallet     string  `json:"wallet,omitempty"`
-	Symbol     string  `json:"symbol,omitempty"`
-	Balance    float64 `json:"balance"`
-	EthBalance float64 `json:"eth_balance,omitempty"`
-	Decimals   uint8   `json:"decimals,omitempty"`
-	Block      uint64  `json:"block,omitempty"`
+	Name       string `json:"name,omitempty"`
+	Wallet     string `json:"wallet,omitempty"`
+	Symbol     string `json:"symbol,omitempty"`
+	Balance    string `json:"balance"`
+	EthBalance string `json:"eth_balance,omitempty"`
+	Decimals   uint8  `json:"decimals,omitempty"`
+	Block      uint64 `json:"block,omitempty"`
 }
 
 type ErrorResponse struct {

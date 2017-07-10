@@ -6,6 +6,7 @@ import (
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/ethclient"
 	"github.com/mkideal/cli"
+	"github.com/shopspring/decimal"
 	"log"
 	"math"
 	"os"
@@ -17,6 +18,8 @@ var GethLocation string
 var UsePort string
 var UseIP string
 var version string = "v0.0.1"
+
+var decimals uint8
 
 var help = cli.HelpCommand("display help information")
 
@@ -102,22 +105,21 @@ func ConnectGeth() {
 	} else {
 		log.Println("Connected to Geth at: ", GethLocation)
 	}
-
 }
 
-func GetAccount(contract string, wallet string) (string, float64, string, uint8, float64, uint64, error) {
+func GetAccount(contract string, wallet string) (string, string, string, uint8, string, uint64, error) {
 	var err error
 
 	token, err := NewTokenCaller(common.HexToAddress(contract), conn)
 	if err != nil {
 		log.Println("Failed to instantiate a Token contract: %v", err)
-		return "error", 0, "error", 0, 0, 0, err
+		return "error", "0.0", "error", 0, "0.0", 0, err
 	}
 
 	getBlock, err := conn.BlockByNumber(context.Background(), nil)
 	if err != nil {
 		log.Println("Failed to get current block number: ", err)
-		return "error", 0, "error", 0, 0, 0, err
+		return "error", "0.0", "error", 0, "0.0", 0, err
 	}
 
 	maxBlock := getBlock.NumberU64()
@@ -125,43 +127,45 @@ func GetAccount(contract string, wallet string) (string, float64, string, uint8,
 	address := common.HexToAddress(wallet)
 	if err != nil {
 		log.Println("Failed hex address: "+wallet, err)
-		return "error", 0, "error", 0, 0, 0, err
+		return "error", "0.0", "error", 0, "0.0", 0, err
 	}
 
 	ethAmount, err := conn.BalanceAt(context.Background(), address, nil)
 	if err != nil {
 		log.Println("Failed to get ethereum balance from address: ", address, err)
-		return "error", 0, "error", 0, 0, 0, err
+		return "error", "0.0", "error", 0, "0.0", 0, err
 	}
 
 	balance, err := token.BalanceOf(nil, address)
 	if err != nil {
 		log.Println("Failed to get balance from contract: "+contract, err)
-		return "error", 0, "error", 0, 0, 0, err
+		return "error", "0.0", "error", 0, "0.0", 0, err
 	}
 	symbol, err := token.Symbol(nil)
 	if err != nil {
 		log.Println("Failed to get symbol from contract: "+contract, err)
-		return "error", 0, "error", 0, 0, 0, err
+		return "error", "0.0", "error", 0, "0.0", 0, err
 	}
-	decimals, err := token.Decimals(nil)
+	tokenDecimals, err := token.Decimals(nil)
 	if err != nil {
 		log.Println("Failed to get decimals from contract: "+contract, err)
-		return "error", 0, "error", 0, 0, 0, err
+		return "error", "0.0", "error", 0, "0.0", 0, err
 	}
 	name, err := token.Name(nil)
 	if err != nil {
 		log.Println("Failed to retrieve token name from contract: "+contract, err)
-		return "error", 0, "error", 0, 0, 0, err
+		return "error", "0.0", "error", 0, "0.0", 0, err
 	}
 
-	z := math.Pow(0.1, float64(decimals))
-	newBalance := float64(balance.Int64()) * z
+	ethBalance, _ := decimal.NewFromString(ethAmount.String())
+	ethFac, _ := decimal.NewFromString("0.000000000000000001")
+	ethCorrected := ethBalance.Mul(ethFac)
 
-	q := math.Pow(0.1, 18)
-	newEthBalance := float64(ethAmount.Int64()) * q
+	tokenBalance, _ := decimal.NewFromString(balance.String())
+	tokenMul := decimal.NewFromFloat(float64(0.1)).Pow(decimal.NewFromFloat(float64(tokenDecimals)))
+	tokenCorrected := tokenBalance.Mul(tokenMul)
 
-	return name, newBalance, symbol, decimals, newEthBalance, maxBlock, err
+	return name, tokenCorrected.String(), symbol, decimals, ethCorrected.String(), maxBlock, err
 
 }
 
