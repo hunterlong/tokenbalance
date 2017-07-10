@@ -6,16 +6,27 @@ Connects to your local geth IPC and prints out a simple JSON response for ethere
 
 ## TokenBalance API
 
-#### Token Balance and Other Info
+#### Token Balance and Token Info
 ```bash
 https://api.tokenbalance.com/balance/CONTRACT_HERE/ETHEREUM_ADDRESS
+```
+###### Response (JSON)
+```bash
+{
+    "name": "TenX Pay Token",
+    "wallet": "0x15b9360330e7be48d949c4710f01321735653f20",
+    "symbol": "PAY",
+    "balance": "10956.366853",
+    "eth_balance": "0",
+    "block": 4001224
+}
 ```
 
 #### Only Token Balance
 ```bash
 https://api.tokenbalance.com/token/CONTRACT_HERE/ETHEREUM_ADDRESS
 ```
-##### Token Response
+###### Response (PLAIN TEXT)
 ```bash
 1022.503000
 ```
