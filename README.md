@@ -10,7 +10,7 @@ Connects to your local geth IPC and prints out a simple JSON response for ethere
 ```bash
 https://api.tokenbalance.com/balance/CONTRACT_HERE/ETHEREUM_ADDRESS
 ```
-###### Response (JSON)
+- ###### Response (JSON)
 ```bash
 {
     "name": "TenX Pay Token",
@@ -26,7 +26,7 @@ https://api.tokenbalance.com/balance/CONTRACT_HERE/ETHEREUM_ADDRESS
 ```bash
 https://api.tokenbalance.com/token/CONTRACT_HERE/ETHEREUM_ADDRESS
 ```
-###### Response (PLAIN TEXT)
+- ###### Response (PLAIN TEXT)
 ```bash
 1022.503000
 ```
