@@ -81,8 +81,8 @@ func getTokenHandler(w http.ResponseWriter, r *http.Request) {
 
 func StartServer() {
 	r := mux.NewRouter()
-	r.HandleFunc("/balance/{contract}/{wallet}", getInfoHandler).Methods("GET")
-	r.HandleFunc("/token/{contract}/{wallet}", getTokenHandler).Methods("GET")
+	r.HandleFunc("/balance/{contract}/{wallet}", getTokenHandler).Methods("GET")
+	r.HandleFunc("/token/{contract}/{wallet}", getInfoHandler).Methods("GET")
 
 	log.Println("TokenBalance Server Running: http://" + UseIP + ":" + UsePort)
 
