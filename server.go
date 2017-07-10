@@ -61,7 +61,7 @@ func getInfoHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func getTokenHandler(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Content-Type", "text/plain")
 
 	vars := mux.Vars(r)
 	contract := vars["contract"]
@@ -72,27 +72,14 @@ func getTokenHandler(w http.ResponseWriter, r *http.Request) {
 	_, balance, _, _, _, _, err := GetAccount(contract, wallet)
 
 	if err != nil {
-		m := ErrorResponse{
-			Error:   true,
-			Message: "could not find contract address",
-		}
-		msg, _ := json.Marshal(m)
-		w.Write(msg)
+		w.Write([]byte("0.0"))
 		return
 	} else {
-
-		new := BalanceResponse{
-			Balance: balance,
-		}
-		j, _ := json.Marshal(new)
-
-		w.Write(j)
+		w.Write([]byte(balance))
 	}
-
 }
 
 func StartServer() {
-
 	r := mux.NewRouter()
 	r.HandleFunc("/balance/{contract}/{wallet}", getInfoHandler).Methods("GET")
 	r.HandleFunc("/token/{contract}/{wallet}", getTokenHandler).Methods("GET")
@@ -101,5 +88,4 @@ func StartServer() {
 
 	http.Handle("/", r)
 	http.ListenAndServe(UseIP+":"+UsePort, nil)
-
 }
