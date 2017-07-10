@@ -35,12 +35,15 @@ https://api.tokenbalance.com/balance/TOKEN_ADDRESS/ETH_ADDRESS
 
 ## Examples
 
-- [Fetch Balance and Token Details for Status Coin](http://api.tokenbalance.com/token/0x744d70FDBE2Ba4CF95131626614a1763DF805B9E/0x242f3f8cffecc870bdb30165a0cb3c1f06f32949)
-- [Fetch Balance and Token Details for Gnosis](http://api.tokenbalance.com/token/0x6810e776880c02933d47db1b9fc05908e5386b96/0x97b47ffde901107303a53630d28105c6a7af1c3e)
-- [Fetch Balance and Token Details for Storj](http://api.tokenbalance.com/token/0xb64ef51c888972c908cfacf59b47c1afbc0ab8ac/0x29b532092fd5031b9ee1e5fe07d627abedd5eda8)
-- [Only Token Balance for Augur](http://api.tokenbalance.com/balance/0x48c80F1f4D53D5951e5D5438B54Cba84f29F32a5/0x90fbfc09db2f4b6e8b65b7a237e15bba9dc5db0c)
-- [Only Token Balance for Golem](http://api.tokenbalance.com/balance/0xa74476443119A942dE498590Fe1f2454d7D4aC0d/0xe42b94dc4b02edef833556ede32757cf2b6cc455)
+- [Fetch Balance and Token Details for Status Coin](https://api.tokenbalance.com/token/0x744d70FDBE2Ba4CF95131626614a1763DF805B9E/0x242f3f8cffecc870bdb30165a0cb3c1f06f32949)
+- [Fetch Balance and Token Details for Gnosis](https://api.tokenbalance.com/token/0x6810e776880c02933d47db1b9fc05908e5386b96/0x97b47ffde901107303a53630d28105c6a7af1c3e)
+- [Fetch Balance and Token Details for Storj](https://api.tokenbalance.com/token/0xb64ef51c888972c908cfacf59b47c1afbc0ab8ac/0x29b532092fd5031b9ee1e5fe07d627abedd5eda8)
+- [Only Token Balance for Augur](https://api.tokenbalance.com/balance/0x48c80F1f4D53D5951e5D5438B54Cba84f29F32a5/0x90fbfc09db2f4b6e8b65b7a237e15bba9dc5db0c)
+- [Only Token Balance for Golem](https://api.tokenbalance.com/balance/0xa74476443119A942dE498590Fe1f2454d7D4aC0d/0xe42b94dc4b02edef833556ede32757cf2b6cc455)
 
+
+## Implement in your App
+Feel free to use the TokenBalance API server to fetch ERC20 token balances and details. We do have a header set that will allow you to call the API via AJAX. `Access-Control-Allow-Origin "*"` The server may limit your requests if you do more than 60 hits per minute.
 
 # Run Your Own Server
 TokenBalance isn't just an API, it's an opensource HTTP server that you can run on your own computer or server.
