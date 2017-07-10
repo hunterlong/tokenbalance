@@ -15,6 +15,10 @@ https://api.tokenbalance.com/balance/CONTRACT_HERE/ETHEREUM_ADDRESS
 ```bash
 https://api.tokenbalance.com/token/CONTRACT_HERE/ETHEREUM_ADDRESS
 ```
+##### Token Response
+```bash
+1022.503000
+```
 
 #### Run Your Own Server
 TokenBalance isn't just an API, it's an opensource HTTP server that you can run on your own computer or server.
@@ -59,13 +63,12 @@ curl https://api.tokenbalance.com/balance/$CONTRACT/$ETH_ADDRESS
 #### Response
 ```bash
 {
-    "name": "Golem Network Token",
-    "wallet": "0xda0aed568d9a2dbdcbafc1576fedc633d28eee9a",
-    "symbol": "GNT",
-    "balance": 7.998173814269688,
-    "eth_balance": 0.9912952230000018,
-    "decimals": 18,
-    "block": 3461147
+    "name": "TenX Pay Token",
+    "wallet": "0x15b9360330e7be48d949c4710f01321735653f20",
+    "symbol": "PAY",
+    "balance": "10956.366853",
+    "eth_balance": "0",
+    "block": 4001224
 }
 ```
 
