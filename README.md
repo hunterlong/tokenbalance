@@ -31,7 +31,7 @@ https://api.tokenbalance.com/token/TOKEN_ADDRESS/ETH_ADDRESS
 1022.503000
 ```
 
-#### Run Your Own Server
+# Run Your Own Server
 TokenBalance isn't just an API, it's an opensource HTTP server that you can run on your own computer or server.
 
 ## Installation for Ubuntu
@@ -46,13 +46,13 @@ wget -qO - https://deb.packager.io/key | sudo apt-key add -
 echo "deb https://deb.packager.io/gh/hunterlong/tokenbalance trusty master" | sudo tee /etc/apt/sources.list.d/tokenbalance.list
 ```
 
-#### Install tokenbalance
+#### Install TokenBalance
 ```bash
 sudo apt-get update
 sudo apt-get install tokenbalance
 ```
 
-## Run Your Own Server
+## Start TokenBalance Server
 ```bash
 tokenbalance start --geth="/ethereum/geth.ipc"
 ```
