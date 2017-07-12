@@ -35,6 +35,7 @@ https://api.tokenbalance.com/balance/TOKEN_ADDRESS/ETH_ADDRESS
 
 ## Examples
 
+- [jsFiddle AJAX Example](https://jsfiddle.net/hunterlong/nkqr6064/)
 - [Fetch Balance and Token Details for Status Coin](https://api.tokenbalance.com/token/0x744d70FDBE2Ba4CF95131626614a1763DF805B9E/0x242f3f8cffecc870bdb30165a0cb3c1f06f32949)
 - [Fetch Balance and Token Details for Gnosis](https://api.tokenbalance.com/token/0x6810e776880c02933d47db1b9fc05908e5386b96/0x97b47ffde901107303a53630d28105c6a7af1c3e)
 - [Fetch Balance and Token Details for Storj](https://api.tokenbalance.com/token/0xb64ef51c888972c908cfacf59b47c1afbc0ab8ac/0x29b532092fd5031b9ee1e5fe07d627abedd5eda8)
