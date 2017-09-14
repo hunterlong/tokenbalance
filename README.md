@@ -13,12 +13,13 @@ https://api.tokenbalance.com/token/TOKEN_ADDRESS/ETH_ADDRESS
 - ###### Response (JSON)
 ```bash
 {
-    "name": "TenX Pay Token",
-    "wallet": "0x15b9360330e7be48d949c4710f01321735653f20",
-    "symbol": "PAY",
-    "balance": "10956.366853",
-    "eth_balance": "3.75",
-    "block": 4001224
+    "name": "Kin",
+    "wallet": "0x393c82c7Ae55B48775f4eCcd2523450d291f2418",
+    "symbol": "KIN",
+    "decimals": 18,
+    "balance": "15788648",
+    "eth_balance": "0.217960852347180212",
+    "block": 4274167
 }
 ```
 
@@ -79,12 +80,13 @@ curl https://api.tokenbalance.com/token/$CONTRACT/$ETH_ADDRESS
 #### Response
 ```bash
 {
-    "name": "TenX Pay Token",
-    "wallet": "0x15b9360330e7be48d949c4710f01321735653f20",
-    "symbol": "PAY",
-    "balance": "10956.366853",
-    "eth_balance": "0",
-    "block": 4001224
+    "name": "Kin",
+    "wallet": "0x393c82c7Ae55B48775f4eCcd2523450d291f2418",
+    "symbol": "KIN",
+    "decimals": 18,
+    "balance": "15788648",
+    "eth_balance": "0.217960852347180212",
+    "block": 4274167
 }
 ```
 

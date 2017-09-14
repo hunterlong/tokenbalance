@@ -165,7 +165,7 @@ func GetAccount(contract string, wallet string) (string, string, string, uint8, 
 	tokenMul := decimal.NewFromFloat(float64(0.1)).Pow(decimal.NewFromFloat(float64(tokenDecimals)))
 	tokenCorrected := tokenBalance.Mul(tokenMul)
 
-	return name, tokenCorrected.String(), symbol, decimals, ethCorrected.String(), maxBlock, err
+	return name, tokenCorrected.String(), symbol, tokenDecimals, ethCorrected.String(), maxBlock, err
 
 }
 
