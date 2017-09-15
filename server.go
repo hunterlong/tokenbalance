@@ -47,10 +47,10 @@ func getInfoHandler(w http.ResponseWriter, r *http.Request) {
 	new := BalanceResponse{
 		Name:       name,
 		Symbol:     token,
+		Decimals:   decimals,
 		Wallet:     wallet,
 		Balance:    balance,
 		EthBalance: ethAmount,
-		Decimals:   decimals,
 		Block:      block,
 	}
 

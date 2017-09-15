@@ -54,7 +54,7 @@ var root = &cli.Command{
 	Argv: func() interface{} { return new(rootT) },
 	Fn: func(ctx *cli.Context) error {
 
-		ctx.String("To start the tokenbalance server, use command:\ntokenbalance --geth \"/root/ethereum/geth.ipc\" --port 8080 --ip 0.0.0.0\n * replace geth location with your own *\n")
+		ctx.String("To start the tokenbalance server, use command:\ntokenbalance start --geth \"/root/ethereum/geth.ipc\" --port 8080 --ip 0.0.0.0\n * replace geth location with your own *\n")
 		return nil
 	},
 }
@@ -165,7 +165,7 @@ func GetAccount(contract string, wallet string) (string, string, string, uint8, 
 	tokenMul := decimal.NewFromFloat(float64(0.1)).Pow(decimal.NewFromFloat(float64(tokenDecimals)))
 	tokenCorrected := tokenBalance.Mul(tokenMul)
 
-	return name, tokenCorrected.String(), symbol, decimals, ethCorrected.String(), maxBlock, err
+	return name, tokenCorrected.String(), symbol, tokenDecimals, ethCorrected.String(), maxBlock, err
 
 }
 
