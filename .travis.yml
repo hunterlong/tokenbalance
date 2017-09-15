@@ -7,6 +7,5 @@ go:
   - 1.8
 
 script:
-  - env GOOS=linux GOARCH=amd64 go build server.go tokens.go main.go
-  - env GOOS=darwin GOARCH=amd64 go build server.go tokens.go main.go
-  - env GOOS=windows GOARCH=386 go build server.go tokens.go main.go
+  - go get
+  - go test -v
