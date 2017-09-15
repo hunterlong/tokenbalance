@@ -1,6 +1,6 @@
 ![TokenBalance](http://i.imgur.com/43Blvht.jpg)
 
-# TokenBalance API
+# TokenBalance API [![Build Status](https://travis-ci.org/hunterlong/tokenbalance.svg?branch=master)](https://travis-ci.org/hunterlong/tokenbalance)
 TokenBalance is an easy to use public API and application that will output your [ERC20 Token](https://github.com/ConsenSys/Tokens/blob/master/Token_Contracts/contracts/Token.sol) balance without any troubles. You can run TokenBalance on your local computer or you can use api.tokenbalance.com to easily parse your erc20 token balances.
 Connects to your local geth IPC and prints out a simple JSON response for ethereum token balances. Runs on port *8080* by default if you wish to run locally.
 
