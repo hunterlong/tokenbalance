@@ -7,6 +7,7 @@ import (
 	"net/http"
 )
 
+
 type BalanceResponse struct {
 	Name       string `json:"name,omitempty"`
 	Wallet     string `json:"wallet,omitempty"`
@@ -80,12 +81,15 @@ func getTokenHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func StartServer() {
+	log.Println("TokenBalance Server Running: http://" + UseIP + ":" + UsePort)
+	http.Handle("/", Router())
+	http.ListenAndServe(UseIP+":"+UsePort, nil)
+}
+
+
+func Router() *mux.Router {
 	r := mux.NewRouter()
 	r.HandleFunc("/balance/{contract}/{wallet}", getTokenHandler).Methods("GET")
 	r.HandleFunc("/token/{contract}/{wallet}", getInfoHandler).Methods("GET")
-
-	log.Println("TokenBalance Server Running: http://" + UseIP + ":" + UsePort)
-
-	http.Handle("/", r)
-	http.ListenAndServe(UseIP+":"+UsePort, nil)
+	return r
 }
