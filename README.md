@@ -7,9 +7,16 @@ Connects to your local geth IPC and prints out a simple JSON response for ethere
 ## Token Balance and Token Info (/token)
 To fetch information about your balance, token details, and ETH balance use the follow API call in a simple HTTP GET or CURL. The response is in JSON so you can easily parse what you need. Replace TOKEN_ADDRESS with the contract address of the ERC20 token, and replace ETH_ADDRESS with your address.
 
+###### Ethereum Mainnet
 ```bash
 https://api.tokenbalance.com/token/TOKEN_ADDRESS/ETH_ADDRESS
 ```
+
+###### Ethereum Ropsten Testnet
+```bash
+https://test.tokenbalance.com/token/TOKEN_ADDRESS/ETH_ADDRESS
+```
+
 - ###### Response (JSON)
 ```bash
 {
