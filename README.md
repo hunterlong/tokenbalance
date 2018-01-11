@@ -50,8 +50,14 @@ https://api.tokenbalance.com/balance/TOKEN_ADDRESS/ETH_ADDRESS
 - [Only Token Balance for Augur](https://api.tokenbalance.com/balance/0x48c80F1f4D53D5951e5D5438B54Cba84f29F32a5/0x90fbfc09db2f4b6e8b65b7a237e15bba9dc5db0c)
 - [Only Token Balance for Golem](https://api.tokenbalance.com/balance/0xa74476443119A942dE498590Fe1f2454d7D4aC0d/0xe42b94dc4b02edef833556ede32757cf2b6cc455)
 
+# Implement in Google Sheets
+If your familiar with Google Sheets, you can easily fetch all of your cryptocurrency balances within 1 spreadsheet. All you need to do is make a cell with the value below.
+```
+=ImportData("https://api.tokenbalance.com/balance/39bb259f66e1c59d5abef88375979b4d20d98022/0xf9578adc61d07671f536d50afc5800232fc9fd86")
+```
+Simple as that! Get creative an use Coin Market Cap's API to fetch the price and multiply with your balance to make a portfolio of your cryptocurrencies!
 
-## Implement in your App
+# Implement in your App
 Feel free to use the TokenBalance API server to fetch ERC20 token balances and details. We do have a header set that will allow you to call the API via AJAX. `Access-Control-Allow-Origin "*"` The server may limit your requests if you do more than 60 hits per minute.
 
 # Run Your Own Server
