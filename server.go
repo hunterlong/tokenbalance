@@ -40,6 +40,7 @@ func getInfoHandler(w http.ResponseWriter, r *http.Request) {
 			Message: "could not find contract address",
 		}
 		msg, _ := json.Marshal(m)
+		w.WriteHeader(http.StatusNotFound)
 		w.Write(msg)
 		return
 	}
@@ -73,6 +74,7 @@ func getTokenHandler(w http.ResponseWriter, r *http.Request) {
 	_, balance, _, _, _, _, err := GetAccount(contract, wallet)
 
 	if err != nil {
+		w.WriteHeader(http.StatusNotFound)
 		w.Write([]byte("0.0"))
 		return
 	} else {
