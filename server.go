@@ -44,7 +44,7 @@ func getInfoHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	new := BalanceResponse{
+	balanceResponse := BalanceResponse{
 		Name:       name,
 		Symbol:     token,
 		Decimals:   decimals,
@@ -54,7 +54,7 @@ func getInfoHandler(w http.ResponseWriter, r *http.Request) {
 		Block:      block,
 	}
 
-	j, err := json.Marshal(new)
+	j, err := json.Marshal(balanceResponse)
 
 	if err == nil {
 		w.Write(j)
