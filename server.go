@@ -7,7 +7,6 @@ import (
 	"net/http"
 )
 
-
 type BalanceResponse struct {
 	Name       string `json:"name,omitempty"`
 	Wallet     string `json:"wallet,omitempty"`
@@ -85,7 +84,6 @@ func StartServer() {
 	http.Handle("/", Router())
 	http.ListenAndServe(UseIP+":"+UsePort, nil)
 }
-
 
 func Router() *mux.Router {
 	r := mux.NewRouter()

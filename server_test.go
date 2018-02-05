@@ -1,13 +1,12 @@
 package main
 
 import (
+	"encoding/json"
+	"github.com/ethereum/go-ethereum/ethclient"
+	"net/http"
 	"net/http/httptest"
 	"testing"
-	"net/http"
-	"github.com/ethereum/go-ethereum/ethclient"
-	"encoding/json"
 )
-
 
 func init() {
 	http.Handle("/", Router())
