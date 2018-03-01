@@ -6,16 +6,21 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
+	"os"
 )
 
 func init() {
 	http.Handle("/", Router())
 }
 
+
+
 func TestConnection(t *testing.T) {
 	var err error
-	conn, err = ethclient.Dial("https://main.cjx.io")
+	url := os.Getenv("GETH_SERVER")
+	conn, err = ethclient.Dial(url)
 	if err != nil {
+		t.Log(err)
 		t.Fail()
 	}
 }
