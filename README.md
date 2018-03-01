@@ -50,6 +50,12 @@ https://api.tokenbalance.com/balance/TOKEN_ADDRESS/ETH_ADDRESS
 - [Only Token Balance for Augur](https://api.tokenbalance.com/balance/0x48c80F1f4D53D5951e5D5438B54Cba84f29F32a5/0x90fbfc09db2f4b6e8b65b7a237e15bba9dc5db0c)
 - [Only Token Balance for Golem](https://api.tokenbalance.com/balance/0xa74476443119A942dE498590Fe1f2454d7D4aC0d/0xe42b94dc4b02edef833556ede32757cf2b6cc455)
 
+# Run with Docker
+You can easily start [Token Balance with Docker](https://hub.docker.com/r/hunterlong/tokenbalance/builds/). Register for a free [Infura.io API Key](https://infura.io/signup) to use Token Balance without downloading the ethereum blockchain.
+```
+docker run -p 8080:8080 -e GETH_SERVER=https://mainnet.infura.io/APIKEY -d hunterlong/tokenbalance
+```
+
 # Implement in Google Sheets
 If your familiar with Google Sheets, you can easily fetch all of your cryptocurrency balances within 1 spreadsheet. All you need to do is make a cell with the value below.
 ```
