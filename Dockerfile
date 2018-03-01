@@ -9,8 +9,8 @@ ENV GOPATH=/go
 ENV PATH=/go/bin:/usr/local/go/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 RUN go get -d -v ./...
-RUN go install -v ./...
+RUN go build .
 
 EXPOSE $PORT
 
-CMD ["/go/bin/tokenbalance start --geth=$GETH_SERVER --port $PORT --ip 0.0.0.0"]
+ENTRYPOINT ./tokenbalance start --geth=$GETH_SERVER --port $PORT --ip 0.0.0.0
