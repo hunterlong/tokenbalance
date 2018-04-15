@@ -3,17 +3,17 @@ package main
 import (
 	"encoding/json"
 	"github.com/ethereum/go-ethereum/ethclient"
+	"math/big"
 	"net/http"
 	"net/http/httptest"
-	"testing"
 	"os"
+	"testing"
+	"github.com/stretchr/testify/assert"
 )
 
 func init() {
 	http.Handle("/", Router())
 }
-
-
 
 func TestConnection(t *testing.T) {
 	var err error
@@ -23,6 +23,13 @@ func TestConnection(t *testing.T) {
 		t.Log(err)
 		t.Fail()
 	}
+}
+
+func TestFormatDecimal(t *testing.T) {
+	number := big.NewInt(0)
+	number.SetString("120984932420357242390102000000000000000", 10)
+	tokenCorrected := BigIntDecimal(number, 18)
+	assert.Equal(t, "120984932420357242390.102", tokenCorrected)
 }
 
 func TestBalanceCheck(t *testing.T) {

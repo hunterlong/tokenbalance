@@ -1,14 +1,14 @@
 package main
 
 import (
+	"bytes"
 	"context"
 	"fmt"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/ethclient"
 	"github.com/mkideal/cli"
-	"github.com/shopspring/decimal"
 	"log"
-	"math"
+	"math/big"
 	"os"
 )
 
@@ -157,23 +157,31 @@ func GetAccount(contract string, wallet string) (string, string, string, uint8, 
 		return "error", "0.0", "error", 0, "0.0", 0, err
 	}
 
-	ethBalance, _ := decimal.NewFromString(ethAmount.String())
-	ethFac, _ := decimal.NewFromString("0.000000000000000001")
-	ethCorrected := ethBalance.Mul(ethFac)
+	ethCorrected := BigIntDecimal(ethAmount, 18)
+	tokenCorrected := BigIntDecimal(balance, int(tokenDecimals))
 
-	tokenBalance, _ := decimal.NewFromString(balance.String())
-	tokenMul := decimal.NewFromFloat(float64(0.1)).Pow(decimal.NewFromFloat(float64(tokenDecimals)))
-	tokenCorrected := tokenBalance.Mul(tokenMul)
-
-	return name, tokenCorrected.String(), symbol, tokenDecimals, ethCorrected.String(), maxBlock, err
+	return name, tokenCorrected, symbol, tokenDecimals, ethCorrected, maxBlock, err
 
 }
 
-func round(num float64) int {
-	return int(num + math.Copysign(0.5, num))
-}
-
-func toFixed(num float64, precision int) float64 {
-	output := math.Pow(10, float64(precision))
-	return float64(round(num*output)) / output
+func BigIntDecimal(balance *big.Int, decimals int) string {
+	if balance.String() == "0" {
+		return "0"
+	}
+	var newNum string
+	for k, v := range balance.String() {
+		if k == len(balance.String())-decimals {
+			newNum += "."
+		}
+		newNum += string(v)
+	}
+	stringBytes := bytes.TrimRight([]byte(newNum), "0")
+	newNum = string(stringBytes)
+	if stringBytes[len(stringBytes)-1] == 46 {
+		newNum += "0"
+	}
+	if stringBytes[0] == 46 {
+		newNum = "0" + newNum
+	}
+	return newNum
 }
