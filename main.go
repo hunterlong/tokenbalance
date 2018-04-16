@@ -109,6 +109,7 @@ func ConnectGeth() {
 
 func GetAccount(contract string, wallet string) (string, string, string, uint8, string, uint64, error) {
 	var err error
+	var symbol string
 
 	token, err := NewTokenCaller(common.HexToAddress(contract), conn)
 	if err != nil {
@@ -141,10 +142,16 @@ func GetAccount(contract string, wallet string) (string, string, string, uint8, 
 		log.Println("Failed to get balance from contract: "+contract, err)
 		return "error", "0.0", "error", 0, "0.0", 0, err
 	}
-	symbol, err := token.Symbol(nil)
-	if err != nil {
-		log.Println("Failed to get symbol from contract: "+contract, err)
-		return "error", "0.0", "error", 0, "0.0", 0, err
+
+	// the popular coin EOS doesn't have a symbol
+	if common.HexToAddress(contract) == common.HexToAddress("0x86fa049857e0209aa7d9e616f7eb3b3b78ecfdb0") {
+		symbol = "EOS"
+	} else {
+		symbol, err = token.Symbol(nil)
+		if err != nil {
+			log.Println("Failed to get symbol from contract: "+contract, err)
+			return "error", "0.0", "error", 0, "0.0", 0, err
+		}
 	}
 	tokenDecimals, err := token.Decimals(nil)
 	if err != nil {

@@ -3,12 +3,12 @@ package main
 import (
 	"encoding/json"
 	"github.com/ethereum/go-ethereum/ethclient"
+	"github.com/stretchr/testify/assert"
 	"math/big"
 	"net/http"
 	"net/http/httptest"
 	"os"
 	"testing"
-	"github.com/stretchr/testify/assert"
 )
 
 func init() {
