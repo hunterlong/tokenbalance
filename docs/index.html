@@ -1,0 +1,357 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Token Balance - ERC20 Tokens - Ethereum Contract Tokens API</title>
+    <meta name=”description” content="TokenBalance.com will easily fetch your ERC20 Ethereum Token balance with a public API for traders and developers. Implement it in your next application today!">
+
+    <link rel="canonical" href="https://tokenbalance.com/" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/narrow.css">
+
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <meta name="image" content="https://tokenbalance.com/images/lgheader.jpg">
+    <!-- Schema.org for Google -->
+    <meta itemprop="name" content="TokenBalance.com - ERC20 Token API">
+    <meta itemprop="description" content="Token Balance shows you the Balance of your Ethereum Contracts and Tokens without the hassle of using geth or web3. Includes a JSON API so you can implement it anywhere.">
+    <meta itemprop="image" content="https://tokenbalance.com/images/lgheader.jpg">
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Token Balance - ERC20 Tokens - Ethereum Contract Tokens API">
+    <meta name="twitter:description" content="TokenBalance.com will easily fetch your ERC20 Ethereum Token balance with a public API for traders and developers. Implement it in your next application today!">
+    <meta name="twitter:site" content="@hunterlong1337">
+    <!-- Open Graph general (Facebook, Pinterest & Google+) -->
+    <meta name="og:title" content="Token Balance - ERC20 Tokens - Ethereum Contract Tokens API">
+    <meta name="og:description" content="TokenBalance.com will easily fetch your ERC20 Ethereum Token balance with a public API for traders and developers. Implement it in your next application today!">
+    <meta name="og:image" content="https://tokenbalance.com/images/lgheader.jpg">
+    <meta name="og:url" content="https://tokenbalance.com">
+    <meta name="og:site_name" content="TokenBalance.com - ERC20 Token API">
+    <meta name="og:type" content="website">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="https://tokenbalance.com">
+        Token Balance
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+            <a class="nav-item nav-link active" href="https://tokenbalance.com">Home</a>
+            <a class="nav-item nav-link" href="/documentation">Documentation</a>
+        </div>
+    </div>
+</nav>
+
+
+    <div class="container">
+
+        <div class="row" style="height: 315px;">
+            <img src="images/lgheader.jpg" class="col col-xs-12" alt="TokenBalance.com get your ERC20 token balance with an API">
+        </div>
+
+        <div class="jumbotron" style="background-color: white;">
+
+            <h2>Get your ERC20 Token Balance</h2>
+
+            <div class="input-group" style="margin-bottom: 15px;">
+                <span class="input-group-addon" id="basic-addon1" style="min-width: 160px;background-color: rgba(74, 234, 88, 0.09);">Ethereum Address</span>
+                <input type="text" class="form-control" id="etheraddr" value="0xda0aed568d9a2dbdcbafc1576fedc633d28eee9a" placeholder="Ethereum Address" aria-describedby="basic-addon1">
+            </div>
+
+            <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1" style="min-width: 160px; background-color: rgba(187, 201, 255, 0.23);">Contract Address</span>
+                <input type="text" class="form-control" id="contractaddr" value="0xa74476443119A942dE498590Fe1f2454d7D4aC0d" placeholder="Token Contract Address" aria-describedby="basic-addon1">
+
+              <div class="input-group-btn">
+                <button type="button" class="choosebtn btn btn-secondary dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="display: block;height: 100%;">
+                  <span id="btnname">Contracts</span> <span class="caret"></span>
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <a class="dropdown-item contractbtn" href="#" data-id="0xBB9bc244D798123fDe783fCc1C72d3Bb8C189413">TheDAO</a>
+                  <a class="dropdown-item contractbtn" href="#" data-id="0x41e5560054824eA6B0732E656E3Ad64E20e94E45">Civic</a>
+                  <a class="dropdown-item contractbtn" href="#" data-id="0x56ba2ee7890461f463f7be02aac3099f6d5811a8">BlockCat</a>
+                  <a class="dropdown-item contractbtn" href="#" data-id="0x86fa049857e0209aa7d9e616f7eb3b3b78ecfdb0">EOS</a>
+                  <a class="dropdown-item contractbtn" href="#" data-id="0xd26114cd6EE289AccF82350c8d8487fedB8A0C07">OMG</a>
+                  <a class="dropdown-item contractbtn" href="#" data-id="0xeDBaF3c5100302dCddA53269322f3730b1F0416d">VEROS</a>
+                  <a class="dropdown-item contractbtn" href="#" data-id="0xB63B606Ac810a52cCa15e44bB630fd42D8d1d83d">Monaco</a>
+                  <a class="dropdown-item contractbtn" href="#" data-id="0x40395044Ac3c0C57051906dA938B54BD6557F212">MobileGo</a>
+                  <a class="dropdown-item contractbtn" href="#" data-id="0x888666CA69E0f178DED6D75b5726Cee99A87D698">ICONOMI</a>
+                  <a class="dropdown-item contractbtn" href="#" data-id="0x0AfFa06e7Fbe5bC9a764C979aA66E8256A631f02">Polybius</a>
+                  <a class="dropdown-item contractbtn" href="#" data-id="0x0D8775F648430679A709E98d2b0Cb6250d2887EF">BAT</a>
+                  <a class="dropdown-item contractbtn" href="#" data-id="0x8f3470A7388c05eE4e7AF3d01D8C722b0FF52374">Veritaseum</a>
+                  <a class="dropdown-item contractbtn" href="#" data-id="0x93E682107d1E9defB0b5ee701C71707a4B2E46Bc">MCAP</a>
+                  <a class="dropdown-item contractbtn" href="#" data-id="0x667088b212ce3d06a1b553a7221e1fd19000d9af">Wings</a>
+                  <a class="dropdown-item contractbtn" href="#" data-id="0x1F573D6Fb3F13d689FF844B4cE37794d79a7FF1C">Bancor Network</a>
+                  <a class="dropdown-item contractbtn" href="#" data-id="0xB97048628DB6B661D4C2aA833e95Dbe1A905B280">TenX</a>
+                  <a class="dropdown-item contractbtn" href="#" data-id="0x960b236A07cf122663c4303350609A66A7B288C0">Aragon</a>
+                  <a class="dropdown-item contractbtn" href="#" data-id="0xB64ef51C888972c908CFacf59B47C1AfBC0Ab8aC">Storj</a>
+                  <a class="dropdown-item contractbtn" href="#" data-id="0x48c80F1f4D53D5951e5D5438B54Cba84f29F32a5">REP</a>
+                  <a class="dropdown-item contractbtn" href="#" data-id="0xa74476443119A942dE498590Fe1f2454d7D4aC0d">Golem</a>
+                  <a class="dropdown-item contractbtn" href="#" data-id="0x744d70FDBE2Ba4CF95131626614a1763DF805B9E">Status</a>
+                  <a class="dropdown-item contractbtn" href="#" data-id="0xcb94be6f13a1182e4a4b6140cb7bf2025d28e41b">Trustcoin</a>
+                  <a class="dropdown-item contractbtn" href="#" data-id="0x08711d3b02c8758f2fb3ab4e80228418a7f8e39c">Edgeless</a>
+                  <a class="dropdown-item contractbtn" href="#" data-id="0x89205A3A3b2A69De6Dbf7f01ED13B2108B2c43e7">Unicorns</a>
+                  <a class="dropdown-item contractbtn" href="#" data-id="0x270FB3bD1ad2678476D556b39053a5D148B91B69">Zeth</a>
+                  <a class="dropdown-item contractbtn" href="#" data-id="0xc66ea802717bfb9833400264dd12c2bceaa34a6d">Maker</a>
+                  <a class="dropdown-item contractbtn" href="#" data-id="0xD8912C10681D8B21Fd3742244f44658dBA12264E">Pluton</a>
+                </div>
+              </div>
+
+            </div>
+
+
+
+            <div id="responsediv" class="jumbotron responsetron">
+
+                <h4 id="coinname">CoinName</h4>
+
+                <ul class="list-group" style="font-size: 20pt;">
+                    <li class="list-group-item" style="background-color: rgba(65, 243, 35, 0.08)">
+                        <span class="badge" id="coinsymbol" style="float: left; margin-top: 11px;background-color: #3f9635;">CJX</span>
+                        <span id="coinbalance">0.0</span>
+                    </li>
+
+                    <li class="list-group-item">
+                        <span class="badge" style="float: left; margin-top: 10px;background-color: #2196f3;">ETH</span>
+                        <span id="etherbalance"><span class="numberspan">0.</span><span class="decimalspan">000000</span></span>
+                    </li>
+
+                </ul>
+
+
+            </div>
+
+            <p class="lead"></p>
+            <p>
+              <a class="btn btn-lg btn-success" id="getbalancebtn" href="#" role="button">Get Balance</a>
+
+            </p>
+        </div>
+
+        <div class="row marketing">
+
+          <div class="col col-md-12">
+            <h4>Ethereum ERC20 Smart Contacts</h4>
+<p>A lot of new coins and Decentralized Autonomous Apps or Dapps are being made on the Ethereum ERC 20 tokens. It allows you to get your profits directly on the basis of the contract with the coin holders based on Ethereum contracts.</p>
+          </div>
+
+          <div class="col col-md-12">
+            <h4>ERC20 dApps Wallets</h4>
+<p>Many new coins or dapps don’t have their exclusive wallet for us to access the balances, especially during the early stages. This new API named TokenBalance allows you to access your ERC 20 balance with ease. You just have to put in the Ethereum address and the contract address and you are good to go! There is also a drop down list of all the contracts currently in the ERC 20 bracket. You can chose among the Monacos, Polybiuses and others.</p>
+          </div>
+
+            <div class="col col-md-6">
+                <h4>Works for any Etheruem Token</h4>
+                <p>TokenBalance.com makes life a little simplier by letting you check your crypto balances even if the coin creators havn't made a wallet/client yet.</p>
+
+                <h4>ETH Mainnet API</h4>
+                <p>We are always connected to a forever updating Ethereum geth server, we'll be able to fetch transactions that happened moments ago.</p>
+
+                <h4>Secure Requests</h4>
+                <p>All requests on the API must go to HTTPS, it will not be routeable any other way. Our geth server's are not public, but our API is free to use everytime!</p>
+            </div>
+
+            <div class="col col-md-6">
+                <h4>Quick API</h4>
+                <p>Use the API on your website or inside of your application to create a real "wallet" feel. The API is super fast, reliable for your next application.</p>
+
+                <h4>Easy to Implement</h4>
+                <p>Token Balance has an increadible easy API for ethereum contract tokens and I recommend you try to implement it in your next application.</p>
+
+                <h4>ERC20 Tokens</h4>
+                <p>Many people don't know the true power behind the Ethereum blockchain, you might have other crypto currencies in your wallet that you didn't even know about.</p>
+            </div>
+        </div>
+
+
+        <div class="row">
+
+
+            <div class="col col-xs-12">
+                <h2>TokenBalance API Endpoints</h2>
+                <pre class="prettyprint lang-json" style="    padding: 25px;border-radius: 7px;border: 1px solid rgba(0, 0, 0, 0.11);background-color: rgba(0, 0, 0, 0.02);background-color: white;">
+Mainnet         - https://api.tokenbalance.com/token/$CONTRACT/$ETH_ADDRESS
+
+Ropsten Testnet - https://test.tokenbalance.com/token/$CONTRACT/$ETH_ADDRESS</pre>
+
+              </div>
+
+
+
+            <div class="col col-xs-12">
+                <h2>Full JSON API Request</h2>
+                <pre class="prettyprint lang-json" style="    padding: 25px;border-radius: 7px;border: 1px solid rgba(0, 0, 0, 0.11);background-color: rgba(0, 0, 0, 0.02);background-color: white;">
+CONTRACT=0x89205a3a3b2a69de6dbf7f01ed13b2108b2c43e7
+ETH_ADDRESS=0x198ef1ec325a96cc354c7266a038be8b5c558f67
+
+curl https://api.tokenbalance.com/token/$CONTRACT/$ETH_ADDRESS
+</pre>
+            </div>
+
+            <div class="col col-xs-12">
+                <h3>Token JSON Response</h3>
+<pre class="prettyprint lang-json" style="    padding: 25px;border-radius: 7px;border: 1px solid rgba(0, 0, 0, 0.11);background-color: rgba(0, 0, 0, 0.02);background-color: white;">
+  {
+    "name": "Golem Network Token",
+    "wallet": "0xda0aed568d9a2dbdcbafc1576fedc633d28eee9a",
+    "symbol": "GNT",
+    "balance": 7.998173814269688,
+    "eth_balance": 0.9912952230000018,
+    "decimals": 18,
+    "block": 3461147
+  }
+</pre>
+                <div class="col col-xs-12">
+                  <p>  Easy right!? The 'balance' is already formated for you with the decimal provided. I find this to be an easy method to get my balance for my alt cryptocurrencies.
+                    Most of the developers havn't even created a stable wallet yet! I've seen many people using geth full time to check their balance, little much in my book. Use the API and be free.</p>
+                </div>
+
+
+            </div>
+        </div>
+
+
+
+        <div class="row">
+            <div class="col col-xs-12">
+                <h3>Balance Only Request</h3>
+                <pre class="prettyprint lang-json" style="    padding: 25px;border-radius: 7px;border: 1px solid rgba(0, 0, 0, 0.11);background-color: rgba(0, 0, 0, 0.02);background-color: white;">
+CONTRACT=0x89205a3a3b2a69de6dbf7f01ed13b2108b2c43e7
+ETH_ADDRESS=0x198ef1ec325a96cc354c7266a038be8b5c558f67
+
+curl https://api.tokenbalance.com/balance/$CONTRACT/$ETH_ADDRESS
+</pre>
+            </div>
+
+            <div class="col col-xs-12">
+                <h3>Balance Plain Text Response</h3>
+<pre class="prettyprint lang-json" style="    padding: 25px;border-radius: 7px;border: 1px solid rgba(0, 0, 0, 0.11);background-color: rgba(0, 0, 0, 0.02);background-color: white;">
+5401731.0867782926098
+</pre>
+                <div class="col col-xs-12">
+                    <p>This is perfect for applications that just want to show the ERC20 token balance in plain text. No JSON parsing needed!</p>
+                </div>
+
+
+            </div>
+        </div>
+
+
+
+
+        <div class="row">
+
+
+        </div>
+
+
+
+
+        <footer class="footer">
+            <p>&copy; 2017 <a href="/">TokenBalance</a> - <a href="https://github.com/hunterlong">Hunter Long</a> - <a href="https://github.com/hunterlong/tokenbalance">Source Code</a> - <a href="https://jsfiddle.net/hunterlong/nkqr6064/">jsFiddle Example</a></p>
+        </footer>
+
+    </div>
+    <!-- /container -->
+
+    <script>
+        $("#getbalancebtn").on("click", function() {
+
+            var ethaddr = $("#etheraddr").val();
+            var contractaddr = $("#contractaddr").val();
+
+            if (ethaddr != "" && contractaddr != ""){
+
+            $.get("https://api.tokenbalance.com/token/" + contractaddr + "/" + ethaddr, function(data) {
+              if (data.error==undefined) {
+                $("#responsediv").fadeIn('fast');
+
+                // var decimalText = data.balance.toString().split(".");
+                // var ethdecimalText = data.eth_balance.toString().split(".");
+
+                // var wholespan = "<span class=\"numberspan\">"+decimalText[0]+".</span>";
+                // var decimalspan = "<span class=\"decimalspan\">"+decimalText[1].substr(0, 10)+"</span>";
+                // var ethwholespan = "<span class=\"numberspan\">"+ethdecimalText[0]+".</span>";
+                // var ethdecimalspan = "<span class=\"decimalspan\">"+ethdecimalText[1].substr(0, 10)+"</span>";
+
+                $("#coinbalance").html(data.balance);
+                $("#coinname").html(data.name);
+                $("#coinsymbol").html(data.symbol);
+                $("#etherbalance").html(data.eth_balance);
+              }
+
+            });
+
+          }
+
+            return false;
+        });
+
+
+        $(".contractbtn").on("click", function() {
+            var addr = $(this).attr('data-id');
+            var myhtml = $(this).text();
+            $("#contractaddr").val(addr);
+            // $("#etheraddr").val('');
+            $("#btnname").text(myhtml);
+            $('.dropdown-toggle').dropdown('toggle');
+            return false;
+          });
+    </script>
+
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-103646485-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+
+</body>
+
+
+</html>
