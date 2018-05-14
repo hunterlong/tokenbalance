@@ -17,6 +17,11 @@ https://api.tokenbalance.com/token/TOKEN_ADDRESS/ETH_ADDRESS
 https://test.tokenbalance.com/token/TOKEN_ADDRESS/ETH_ADDRESS
 ```
 
+###### Ethereum Rinkeby Testnet
+```bash
+https://rinkeby.tokenbalance.com/token/TOKEN_ADDRESS/ETH_ADDRESS
+```
+
 - ###### Response (JSON)
 ```bash
 {
