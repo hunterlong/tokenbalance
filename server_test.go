@@ -23,9 +23,16 @@ func TestConnection(t *testing.T) {
 
 func TestFormatDecimal(t *testing.T) {
 	number := big.NewInt(0)
-	number.SetString("120984932420357242390102000000000000000", 10)
+	number.SetString("72094368689712", 10)
 	tokenCorrected := BigIntDecimal(number, 18)
-	assert.Equal(t, "120984932420357242390.102", tokenCorrected)
+	assert.Equal(t, "0.000072094368689712", tokenCorrected)
+}
+
+func TestFormatSmallDecimal(t *testing.T) {
+	number := big.NewInt(0)
+	number.SetString("1142400000000001", 10)
+	tokenCorrected := BigIntDecimal(number, 18)
+	assert.Equal(t, "0.001142400000000001", tokenCorrected)
 }
 
 func TestBalanceCheck(t *testing.T) {
@@ -66,7 +73,6 @@ func TestMainnetTokenJson(t *testing.T) {
 	Router().ServeHTTP(rr, req)
 	var d BalanceResponse
 	json.Unmarshal(rr.Body.Bytes(), &d)
-
 	assert.Equal(t, "OMGToken", d.Name, "should be token name")
 	assert.Equal(t, "0x42d4722b804585cdf6406fa7739e794b0aa8b1ff", d.Wallet, "should be wallet address")
 	assert.Equal(t, uint8(0x12), d.Decimals, "should be decimals")
@@ -81,7 +87,6 @@ func TestMainnetEOSTokenJson(t *testing.T) {
 	Router().ServeHTTP(rr, req)
 	var d BalanceResponse
 	json.Unmarshal(rr.Body.Bytes(), &d)
-
 	assert.Equal(t, "", d.Name, "should be token name")
 	assert.Equal(t, "0xbfaa1a1ea534d35199e84859975648b59880f639", d.Wallet, "should be wallet address")
 	assert.Equal(t, uint8(0x12), d.Decimals, "should be decimals")

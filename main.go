@@ -11,6 +11,7 @@ import (
 	"log"
 	"math/big"
 	"os"
+	"strconv"
 )
 
 var conn *ethclient.Client
@@ -178,16 +179,19 @@ func GetAccount(contract string, wallet string) (string, string, string, uint8, 
 }
 
 func BigIntDecimal(balance *big.Int, decimals int) string {
-	if balance.String() == "0" {
-		return "0"
-	}
-	var newNum string
-	for k, v := range balance.String() {
-		if k == len(balance.String())-decimals {
-			newNum += "."
-		}
-		newNum += string(v)
-	}
+	bal := big.NewFloat(0)
+	bal.SetInt(balance)
+	pow := BigPow(10, int64(decimals))
+	p := big.NewFloat(0)
+	p.SetInt(pow)
+	bal.Quo(bal, p)
+	deci := strconv.Itoa(decimals)
+	dec := "%." + deci + "f"
+	newNum := Clean(fmt.Sprintf(dec, bal))
+	return newNum
+}
+
+func Clean(newNum string) string {
 	stringBytes := bytes.TrimRight([]byte(newNum), "0")
 	newNum = string(stringBytes)
 	if stringBytes[len(stringBytes)-1] == 46 {
@@ -197,4 +201,9 @@ func BigIntDecimal(balance *big.Int, decimals int) string {
 		newNum = "0" + newNum
 	}
 	return newNum
+}
+
+func BigPow(a, b int64) *big.Int {
+	r := big.NewInt(a)
+	return r.Exp(r, big.NewInt(b), nil)
 }
