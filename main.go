@@ -5,12 +5,12 @@ import (
 	"context"
 	"fmt"
 	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/ethclient"
 	"github.com/mkideal/cli"
 	"log"
 	"math/big"
 	"os"
-	"github.com/ethereum/go-ethereum/core/types"
 )
 
 var conn *ethclient.Client
@@ -102,35 +102,34 @@ func ConnectGeth() {
 	var err error
 	conn, err = ethclient.Dial(GethLocation)
 	if err != nil {
-		log.Fatalln("Failed to connect to the Ethereum client: %v", err)
+		log.Fatalf("Failed to connect to the Ethereum client: %v\n", err)
 	} else {
-		log.Println("Connected to Geth at: ", GethLocation)
+		log.Printf("Connected to Geth at: %v\n", GethLocation)
 	}
 }
 
-func GetAccount(contract string, wallet string) (string, string, string, uint8, string, uint64, error) {
+func GetAccount(contract string, wallet string) (string, string, string, uint8, string, int64, error) {
 	var err error
 	var symbol, tokenName string
 	var address common.Address
 	var getBlock *types.Block
 
 	var ethAmount, balance *big.Int
-	var tokenDecimals uint8
-
+	var tokenDecimals *big.Int
 
 	token, err := NewTokenCaller(common.HexToAddress(contract), conn)
 	if err != nil {
-		log.Println("Failed to instantiate a Token contract: %v", err)
+		log.Printf("Failed to instantiate a Token contract: %v\n", err)
 		return "error", "0.0", "error", 0, "0.0", 0, err
 	}
 
-	getBlock, err = conn.BlockByNumber(context.Background(), nil)
+	getBlock, err = conn.BlockByNumber(context.TODO(), nil)
 	if err != nil {
-		log.Println("Failed to get current block number: ", err)
+		log.Printf("Failed to get current block number: %v\n", err)
 		getBlock = nil
 	}
 
-	maxBlock := getBlock.NumberU64()
+	maxBlock := getBlock.Number().Int64()
 
 	address = common.HexToAddress(wallet)
 	if err != nil {
@@ -138,9 +137,9 @@ func GetAccount(contract string, wallet string) (string, string, string, uint8, 
 		address = common.HexToAddress("0x")
 	}
 
-	ethAmount, err = conn.BalanceAt(context.Background(), address, nil)
+	ethAmount, err = conn.BalanceAt(context.TODO(), address, nil)
 	if err != nil {
-		log.Println("Failed to get ethereum balance from address: ", address, err)
+		log.Printf("Failed to get ethereum balance from address: %v | %v", address, err)
 		ethAmount = big.NewInt(0)
 	}
 
@@ -163,7 +162,7 @@ func GetAccount(contract string, wallet string) (string, string, string, uint8, 
 	tokenDecimals, err = token.Decimals(nil)
 	if err != nil {
 		log.Println("Failed to get decimals from contract: "+contract, err)
-		tokenDecimals = 0
+		tokenDecimals = big.NewInt(0)
 	}
 	tokenName, err = token.Name(nil)
 	if err != nil {
@@ -172,9 +171,9 @@ func GetAccount(contract string, wallet string) (string, string, string, uint8, 
 	}
 
 	ethCorrected := BigIntDecimal(ethAmount, 18)
-	tokenCorrected := BigIntDecimal(balance, int(tokenDecimals))
+	tokenCorrected := BigIntDecimal(balance, int(tokenDecimals.Int64()))
 
-	return tokenName, tokenCorrected, symbol, tokenDecimals, ethCorrected, maxBlock, err
+	return tokenName, tokenCorrected, symbol, uint8(tokenDecimals.Uint64()), ethCorrected, maxBlock, err
 
 }
 

@@ -14,7 +14,7 @@ type BalanceResponse struct {
 	Balance    string `json:"balance"`
 	EthBalance string `json:"eth_balance,omitempty"`
 	Decimals   uint8  `json:"decimals,omitempty"`
-	Block      uint64 `json:"block,omitempty"`
+	Block      int64  `json:"block,omitempty"`
 }
 
 type ErrorResponse struct {
