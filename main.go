@@ -5,7 +5,6 @@ import (
 	"context"
 	"fmt"
 	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/ethclient"
 	"github.com/mkideal/cli"
 	"log"
@@ -51,19 +50,12 @@ var root = &cli.Command{
 		"any troubles. Connects to your local geth \n" +
 		"IPC and prints out a simple JSON response \n" +
 		"for ethereum token balances.",
-	// Argv is a factory function of argument object
-	// ctx.Argv() is if Command.Argv == nil or Command.Argv() is nil
 	Argv: func() interface{} { return new(rootT) },
 	Fn: func(ctx *cli.Context) error {
 
 		ctx.String("To start the tokenbalance server, use command:\ntokenbalance start --geth \"/root/ethereum/geth.ipc\" --port 8080 --ip 0.0.0.0\n * replace geth location with your own *\n")
 		return nil
 	},
-}
-
-// child command
-type childT struct {
-	cli.Helper
 }
 
 var child = &cli.Command{
@@ -94,9 +86,9 @@ var versionCli = &cli.Command{
 
 type argT struct {
 	cli.Helper
-	Geth string `cli:"*g,geth" usage:"geth IPC location"`
+	Geth string `cli:"*g,geth" usage:"attach geth IPC or HTTP location"`
 	IP   string `cli:"ip" usage:"Bind to IP Address" dft:"0.0.0.0"`
-	Port string `cli:"p,port" usage:"HTTP port for JSON" dft:"8080"`
+	Port string `cli:"p,port" usage:"HTTP server port for token information in JSON" dft:"8080"`
 }
 
 func ConnectGeth() {
@@ -109,83 +101,104 @@ func ConnectGeth() {
 	}
 }
 
-func GetAccount(contract string, wallet string) (string, string, string, uint8, string, int64, error) {
+func GetAccount(contract string, wallet string) (*BalanceResponse, error) {
 	var err error
-	var symbol, tokenName string
-	var address common.Address
-	var getBlock *types.Block
 
-	var ethAmount, balance *big.Int
-	var tokenDecimals *big.Int
+	response := new(BalanceResponse)
+
+	response.Wallet = common.HexToAddress(wallet)
 
 	token, err := NewTokenCaller(common.HexToAddress(contract), conn)
 	if err != nil {
 		log.Printf("Failed to instantiate a Token contract: %v\n", err)
-		return "error", "0.0", "error", 0, "0.0", 0, err
+		return nil, err
 	}
 
-	getBlock, err = conn.BlockByNumber(context.TODO(), nil)
+	response.Block, err = conn.BlockByNumber(context.TODO(), nil)
 	if err != nil {
 		log.Printf("Failed to get current block number: %v\n", err)
-		getBlock = nil
+		response.Block = nil
 	}
 
-	maxBlock := getBlock.Number().Int64()
-
-	address = common.HexToAddress(wallet)
+	response.Decimals, err = token.Decimals(nil)
 	if err != nil {
-		log.Println("Failed hex address: "+wallet, err)
-		address = common.HexToAddress("0x")
+		log.Printf("Failed to get decimals from contract: %v \n", contract)
+		return nil, err
 	}
 
-	ethAmount, err = conn.BalanceAt(context.TODO(), address, nil)
+	response.EthBalance, err = conn.BalanceAt(context.TODO(), response.Wallet, nil)
 	if err != nil {
-		log.Printf("Failed to get ethereum balance from address: %v | %v", address, err)
-		ethAmount = big.NewInt(0)
+		log.Printf("Failed to get ethereum balance from address: %v \n", response.Wallet)
 	}
 
-	balance, err = token.BalanceOf(nil, address)
+	response.Balance, err = token.BalanceOf(nil, response.Wallet)
 	if err != nil {
-		log.Println("Failed to get balance from contract: "+contract, err)
-		balance = big.NewInt(0)
+		log.Printf("Failed to get balance from contract:  %v \n", contract, err)
 	}
 
-	// the popular coin EOS doesn't have a symbol
-	if common.HexToAddress(contract) == common.HexToAddress("0x86fa049857e0209aa7d9e616f7eb3b3b78ecfdb0") {
-		symbol = "EOS"
-	} else {
-		symbol, err = token.Symbol(nil)
-		if err != nil {
-			log.Println("Failed to get symbol from contract: "+contract, err)
-			symbol = "MISSING"
-		}
-	}
-	tokenDecimals, err = token.Decimals(nil)
+	response.Symbol, err = token.Symbol(nil)
 	if err != nil {
-		log.Println("Failed to get decimals from contract: "+contract, err)
-		tokenDecimals = big.NewInt(0)
+		log.Printf("Failed to get symbol from contract: %v \n", contract)
+		response.Symbol = SymbolFix(contract)
 	}
-	tokenName, err = token.Name(nil)
+
+	response.Name, err = token.Name(nil)
 	if err != nil {
-		log.Println("Failed to retrieve token name from contract: "+contract, err)
-		tokenName = "MISSING"
+		log.Printf("Failed to retrieve token name from contract: %v | %v\n", contract, err)
+		response.Name = "MISSING"
 	}
 
-	ethCorrected := BigIntDecimal(ethAmount, 18)
-	tokenCorrected := BigIntDecimal(balance, int(tokenDecimals.Int64()))
-
-	return tokenName, tokenCorrected, symbol, uint8(tokenDecimals.Uint64()), ethCorrected, maxBlock, err
-
+	return response, err
 }
 
-func BigIntDecimal(balance *big.Int, decimals int) string {
+func SymbolFix(contract string) string {
+	switch common.HexToAddress(contract).String() {
+	case "0x86Fa049857E0209aa7D9e616F7eb3b3B78ECfdb0":
+		return "EOS"
+	}
+	return "MISSING"
+}
+
+type jsonResponse struct {
+	Name       string `json:"name,omitempty"`
+	Wallet     string `json:"wallet,omitempty"`
+	Symbol     string `json:"symbol,omitempty"`
+	Balance    string `json:"balance"`
+	EthBalance string `json:"eth_balance,omitempty"`
+	Decimals   int64  `json:"decimals,omitempty"`
+	Block      int64  `json:"block,omitempty"`
+}
+
+func (b *BalanceResponse) Format() *jsonResponse {
+	return &jsonResponse{
+		b.Name,
+		b.Wallet.String(),
+		b.Symbol,
+		BigIntDecimal(b.Balance, b.Decimals.Int64()),
+		BigIntDecimal(b.EthBalance, 18),
+		b.Decimals.Int64(),
+		b.Block.Number().Int64(),
+	}
+}
+
+func (b *BalanceResponse) Ok() bool {
+	if b.Decimals.Sign() >= 0 && b.Balance.Sign() >= 0 {
+		return true
+	}
+	return false
+}
+
+func BigIntDecimal(balance *big.Int, decimals int64) string {
+	if balance.Sign() == 0 {
+		return "0"
+	}
 	bal := big.NewFloat(0)
 	bal.SetInt(balance)
-	pow := BigPow(10, int64(decimals))
+	pow := BigPow(10, decimals)
 	p := big.NewFloat(0)
 	p.SetInt(pow)
 	bal.Quo(bal, p)
-	deci := strconv.Itoa(decimals)
+	deci := strconv.Itoa(int(decimals))
 	dec := "%." + deci + "f"
 	newNum := Clean(fmt.Sprintf(dec, bal))
 	return newNum

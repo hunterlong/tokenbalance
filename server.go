@@ -2,19 +2,22 @@ package main
 
 import (
 	"encoding/json"
+	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/core/types"
 	"github.com/gorilla/mux"
 	"log"
+	"math/big"
 	"net/http"
 )
 
 type BalanceResponse struct {
-	Name       string `json:"name,omitempty"`
-	Wallet     string `json:"wallet,omitempty"`
-	Symbol     string `json:"symbol,omitempty"`
-	Balance    string `json:"balance"`
-	EthBalance string `json:"eth_balance,omitempty"`
-	Decimals   uint8  `json:"decimals,omitempty"`
-	Block      int64  `json:"block,omitempty"`
+	Name       string         `json:"name,omitempty"`
+	Wallet     common.Address `json:"wallet,omitempty"`
+	Symbol     string         `json:"symbol,omitempty"`
+	Balance    *big.Int       `json:"balance"`
+	EthBalance *big.Int       `json:"eth_balance,omitempty"`
+	Decimals   *big.Int       `json:"decimals,omitempty"`
+	Block      *types.Block   `json:"block,omitempty"`
 }
 
 type ErrorResponse struct {
@@ -22,60 +25,49 @@ type ErrorResponse struct {
 	Message string `json:"message"`
 }
 
-func getInfoHandler(w http.ResponseWriter, r *http.Request) {
+func getTokenHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
 	vars := mux.Vars(r)
 	contract := vars["contract"]
 	wallet := vars["wallet"]
 
-	log.Println("Fetching Wallet:", wallet, "at Contract:", contract)
+	log.Println("Fetching /token for Wallet:", wallet, "at Contract:", contract)
 
-	name, balance, token, decimals, ethAmount, block, err := GetAccount(contract, wallet)
+	response, err := GetAccount(contract, wallet)
 
 	if err != nil {
 		m := ErrorResponse{
 			Error:   true,
-			Message: "could not find contract address",
+			Message: err.Error(),
 		}
+		w.WriteHeader(http.StatusNotFound)
 		msg, _ := json.Marshal(m)
 		w.Write(msg)
-		return
-	}
-
-	new := BalanceResponse{
-		Name:       name,
-		Symbol:     token,
-		Decimals:   decimals,
-		Wallet:     wallet,
-		Balance:    balance,
-		EthBalance: ethAmount,
-		Block:      block,
-	}
-
-	j, err := json.Marshal(new)
-
-	if err == nil {
-		w.Write(j)
+	} else {
+		w.WriteHeader(http.StatusOK)
+		jsoned, _ := json.Marshal(response.Format())
+		w.Write(jsoned)
 	}
 }
 
-func getTokenHandler(w http.ResponseWriter, r *http.Request) {
+func getBalanceHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/plain")
-
 	vars := mux.Vars(r)
 	contract := vars["contract"]
 	wallet := vars["wallet"]
 
-	log.Println("Fetching Wallet:", wallet, "at Contract:", contract)
+	log.Println("Fetching /balance for Wallet:", wallet, "at Contract:", contract)
 
-	_, balance, _, _, _, _, err := GetAccount(contract, wallet)
+	response, err := GetAccount(contract, wallet)
 
 	if err != nil {
+		w.WriteHeader(http.StatusNotFound)
 		w.Write([]byte("0.0"))
 		return
 	} else {
-		w.Write([]byte(balance))
+		w.WriteHeader(http.StatusOK)
+		w.Write([]byte(response.Format().Balance))
 	}
 }
 
@@ -87,7 +79,7 @@ func StartServer() {
 
 func Router() *mux.Router {
 	r := mux.NewRouter()
-	r.HandleFunc("/balance/{contract}/{wallet}", getTokenHandler).Methods("GET")
-	r.HandleFunc("/token/{contract}/{wallet}", getInfoHandler).Methods("GET")
+	r.HandleFunc("/balance/{contract}/{wallet}", getBalanceHandler).Methods("GET")
+	r.HandleFunc("/token/{contract}/{wallet}", getTokenHandler).Methods("GET")
 	return r
 }
