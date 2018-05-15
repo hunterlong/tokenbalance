@@ -73,6 +73,13 @@ func TestTokenJson(t *testing.T) {
 	assert.Equal(t, "50.0", d.EthBalance, "should be ETH balance")
 }
 
+func TestFailingTokenJson(t *testing.T) {
+	req, _ := http.NewRequest("GET", "/token/0xBDe8f7820b5544a49D34F9dDeaCAbEDC7C0B5adc/0x17a813df7322f8aac5cac75eb62c0d13b8aea29d", nil)
+	rr := httptest.NewRecorder()
+	Router().ServeHTTP(rr, req)
+	assert.Equal(t, 404, rr.Result().StatusCode)
+}
+
 func TestMainnetConnection(t *testing.T) {
 	var err error
 	url := "https://mainnet.infura.io/dZfBqHazp5fzdZVJ4Byc"
