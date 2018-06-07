@@ -65,10 +65,11 @@ https://api.tokenbalance.com/balance/TOKEN_ADDRESS/ETH_ADDRESS
 Token Balance can be ran on Mac, Linux, and Windows without compiling the entire application from source.
 
 ### Mac and Linux Instructions
+Commands to quickly install the application are below. `OS` can be `osx`, or `linux`. `ARCH` is `x64` for 64 bit and `x32` for 32 bit. `VERSION` is the tag name of the latest version found in [Releases](https://github.com/hunterlong/tokenbalance/releases/latest).
 ```
-OS="osx"                // osx, linux
-ARCH="x64"              // x64, x32
-VERSION="latest10203"   // view tag name in github releases
+OS="osx"
+ARCH="x64"
+VERSION="v1.5"
 
 wget https://github.com/hunterlong/tokenbalance/releases/download/$VERSION/tokenbalance-$OS-$ARCH
 mv tokenbalance-$OS-$ARCH /usr/local/bin/tokenbalance
@@ -76,7 +77,7 @@ tokenbalance version
 ```
 
 ### Windows Installation
-1. Download the latest version of Token Balance in [Releases](https://github.com/hunterlong/tokenbalance/releases/latest). Download the `-x32` if your using a 32 bit version of Windows.
+1. Download the latest version in [Releases](https://github.com/hunterlong/tokenbalance/releases/latest). Download the `-x32` if your using a 32 bit version of Windows.
 2. Once downloaded, rename the file to `tokenbalance.exe` for ease of use. Use the application in the Command Prompt.
 
 # Run with Docker
