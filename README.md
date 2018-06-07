@@ -66,12 +66,18 @@ Token Balance can be ran on Mac, Linux, and Windows without compiling the entire
 
 ### Mac and Linux Instructions
 ```
-VERSION="tokenbalance-osx-x64"
+OS="osx"                // osx, linux
+ARCH="x64"              // x64, x32
+VERSION="latest10203"   // view tag name in github releases
 
-wget https://github.com/hunterlong/tokenbalance/releases/latest
-
+wget https://github.com/hunterlong/tokenbalance/releases/download/$VERSION/tokenbalance-$OS-$ARCH
+mv tokenbalance-$OS-$ARCH /usr/local/bin/tokenbalance
+tokenbalance version
 ```
 
+### Windows Installation
+1. Download the latest version of Token Balance in [Releases](https://github.com/hunterlong/tokenbalance/releases/latest). Download the `-x32` if your using a 32 bit version of Windows.
+2. Once downloaded, rename the file to `tokenbalance.exe` for ease of use. Use the application in the Command Prompt.
 
 # Run with Docker
 You can easily start [Token Balance with Docker](https://hub.docker.com/r/hunterlong/tokenbalance/builds/). Register for a free [Infura.io API Key](https://infura.io/signup) to use Token Balance without downloading the ethereum blockchain.

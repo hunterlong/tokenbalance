@@ -36,4 +36,4 @@ before_script:
 script:
   - go get
   - go test -v
-  - ./travis/build.sh
+  - ./.travis/build.sh
