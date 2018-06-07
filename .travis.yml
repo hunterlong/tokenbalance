@@ -6,6 +6,34 @@ os:
 go:
   - 1.9
 
+sudo: required
+
+services:
+  - docker
+
+before_deploy:
+  - git config --local user.name "hunterlong"
+  - git config --local user.email "info@socialeck.com"
+  - git tag "TokenBalance-$(date +'%Y%m%d%H%M%S')"
+deploy:
+  provider: releases
+  api_key: $GH_TOKEN
+  file:
+    - "build/tokenbalance-osx-x64"
+    - "build/tokenbalance-osx-x32"
+    - "build/tokenbalance-linux-x64"
+    - "build/tokenbalance-linux-x32"
+    - "build/tokenbalance-windows-x64.exe"
+    - "build/tokenbalance-windows-x32.exe"
+  skip_cleanup: true
+
+before_install:
+  - docker pull karalabe/xgo-latest
+
+before_script:
+  - go get github.com/karalabe/xgo
+
 script:
   - go get
   - go test -v
+  - ./travis/build.sh

@@ -112,5 +112,5 @@ func TestMainnetEOSTokenJson(t *testing.T) {
 	assert.Equal(t, "0xbfaA1A1EA534d35199E84859975648B59880f639", d.Wallet, "should be wallet address")
 	assert.Equal(t, int64(18), d.Decimals, "should be decimals")
 	assert.Equal(t, "EOS", d.Symbol, "should be symbol")
-	assert.Equal(t, "9200000.0", d.Balance, "should be Token balance")
+	assert.Equal(t, "8750000.0", d.Balance, "should be Token balance")
 }

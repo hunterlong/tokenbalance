@@ -60,6 +60,19 @@ https://api.tokenbalance.com/balance/TOKEN_ADDRESS/ETH_ADDRESS
 - [Only Token Balance for Augur](https://api.tokenbalance.com/balance/0x48c80F1f4D53D5951e5D5438B54Cba84f29F32a5/0x90fbfc09db2f4b6e8b65b7a237e15bba9dc5db0c)
 - [Only Token Balance for Golem](https://api.tokenbalance.com/balance/0xa74476443119A942dE498590Fe1f2454d7D4aC0d/0xe42b94dc4b02edef833556ede32757cf2b6cc455)
 
+
+# Local Installation
+Token Balance can be ran on Mac, Linux, and Windows without compiling the entire application from source.
+
+### Mac and Linux Instructions
+```
+VERSION="tokenbalance-osx-x64"
+
+wget https://github.com/hunterlong/tokenbalance/releases/latest
+
+```
+
+
 # Run with Docker
 You can easily start [Token Balance with Docker](https://hub.docker.com/r/hunterlong/tokenbalance/builds/). Register for a free [Infura.io API Key](https://infura.io/signup) to use Token Balance without downloading the ethereum blockchain.
 ```
