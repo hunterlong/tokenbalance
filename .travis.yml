@@ -11,6 +11,17 @@ sudo: required
 services:
   - docker
 
+cache:
+  bundler: true
+  directories:
+    - $HOME/docker
+
+before_cache:
+  # Save tagged docker images
+  - >
+    mkdir -p $HOME/docker && docker images -a --filter='dangling=false' --format '{{.Repository}}:{{.Tag}} {{.ID}}'
+    | xargs -n 2 -t sh -c 'test -e $HOME/docker/$1.tar.gz || docker save $0 | gzip -2 > $HOME/docker/$1.tar.gz'
+
 before_deploy:
   - git config --local user.name "hunterlong"
   - git config --local user.email "info@socialeck.com"
@@ -28,12 +39,13 @@ deploy:
   skip_cleanup: true
 
 before_install:
+  - if [[ -d $HOME/docker ]]; then ls $HOME/docker/*.tar.gz | xargs -I {file} sh -c "zcat {file} | docker load"; fi
   - docker pull karalabe/xgo-latest
 
 before_script:
   - go get github.com/karalabe/xgo
 
 script:
-  - go get
+  - go get -u
   - go test -v
   - ./.travis/build.sh
