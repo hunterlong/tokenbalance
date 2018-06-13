@@ -1,16 +1,21 @@
 ![TokenBalance](http://i.imgur.com/43Blvht.jpg)
 
-# TokenBalance API [![Build Status](https://travis-ci.org/hunterlong/tokenbalance.svg?branch=master)](https://travis-ci.org/hunterlong/tokenbalance)
+
+# TokenBalance API [![Build Status](https://travis-ci.org/hunterlong/tokenbalance.svg?branch=master)](https://travis-ci.org/hunterlong/tokenbalance) [![Docker Build Status](https://img.shields.io/docker/build/hunterlong/tokenbalance.svg)](https://hub.docker.com/r/hunterlong/tokenbalance/)
 TokenBalance is an easy to use public API and application that will output your [ERC20 Token](https://github.com/ConsenSys/Tokens/blob/master/Token_Contracts/contracts/Token.sol) balance without any troubles. You can run TokenBalance on your local computer or you can use api.tokenbalance.com to easily parse your erc20 token balances.
 Connects to your local geth IPC and prints out a simple JSON response for ethereum token balances. Runs on port *8080* by default if you wish to run locally.
-
-## Token Balance and Token Info (/token)
-To fetch information about your balance, token details, and ETH balance use the follow API call in a simple HTTP GET or CURL. The response is in JSON so you can easily parse what you need. Replace TOKEN_ADDRESS with the contract address of the ERC20 token, and replace ETH_ADDRESS with your address.
 
 ## Server Status and Uptime
 You can view the current status of Token Balance along with API latency information on our status page. This status page logs the Ethereum Mainnet, Ropsten testnet, and Rinkeby testnet.
 
 [https://status.tokenbalance.com](https://status.tokenbalance.com)
+
+## Installing Token Balance
+You don't need to compile Token Balance from source anymore! All you need to do is go to [Releases](https://github.com/hunterlong/tokenbalance/releases/latest) in this repo and download the binary that is built for your OS. 
+Once you've downloaded, rename the file to `tokenbalance` for ease if use. On Mac or Linux move this file with the command `mv tokenbalance /usr/local/bin/tokenbalance`, you should be able to run the application from anywhere now. 
+
+## Token Balance and Token Info (/token)
+To fetch information about your balance, token details, and ETH balance use the follow API call in a simple HTTP GET or CURL. The response is in JSON so you can easily parse what you need. Replace TOKEN_ADDRESS with the contract address of the ERC20 token, and replace ETH_ADDRESS with your address.
 
 ###### Ethereum Mainnet
 ```bash
@@ -59,26 +64,6 @@ https://api.tokenbalance.com/balance/TOKEN_ADDRESS/ETH_ADDRESS
 - [Fetch Balance and Token Details for Storj](https://api.tokenbalance.com/token/0xb64ef51c888972c908cfacf59b47c1afbc0ab8ac/0x29b532092fd5031b9ee1e5fe07d627abedd5eda8)
 - [Only Token Balance for Augur](https://api.tokenbalance.com/balance/0x48c80F1f4D53D5951e5D5438B54Cba84f29F32a5/0x90fbfc09db2f4b6e8b65b7a237e15bba9dc5db0c)
 - [Only Token Balance for Golem](https://api.tokenbalance.com/balance/0xa74476443119A942dE498590Fe1f2454d7D4aC0d/0xe42b94dc4b02edef833556ede32757cf2b6cc455)
-
-
-# Local Installation
-Token Balance can be ran on Mac, Linux, and Windows without compiling the entire application from source.
-
-### Mac and Linux Instructions
-Commands to quickly install the application are below. `OS` can be `osx`, or `linux`. `ARCH` is `x64` for 64 bit and `x32` for 32 bit. `VERSION` is the tag name of the latest version found in [Releases](https://github.com/hunterlong/tokenbalance/releases/latest).
-```
-OS="osx"
-ARCH="x64"
-VERSION="v1.5"
-
-wget https://github.com/hunterlong/tokenbalance/releases/download/$VERSION/tokenbalance-$OS-$ARCH
-mv tokenbalance-$OS-$ARCH /usr/local/bin/tokenbalance
-tokenbalance version
-```
-
-### Windows Installation
-1. Download the latest version in [Releases](https://github.com/hunterlong/tokenbalance/releases/latest). Download the `-x32` if your using a 32 bit version of Windows.
-2. Once downloaded, rename the file to `tokenbalance.exe` for ease of use. Use the application in the Command Prompt.
 
 # Run with Docker
 You can easily start [Token Balance with Docker](https://hub.docker.com/r/hunterlong/tokenbalance/builds/). Register for a free [Infura.io API Key](https://infura.io/signup) to use Token Balance without downloading the ethereum blockchain.

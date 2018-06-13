@@ -13,14 +13,14 @@ import (
 	"strconv"
 )
 
-var conn *ethclient.Client
-
-var GethLocation string
-var UsePort string
-var UseIP string
-var version string = "v0.0.1"
-
-var decimals uint8
+var (
+	conn         *ethclient.Client
+	GethLocation string
+	UsePort      string
+	UseIP        string
+	VERSION      string
+	decimals     uint8
+)
 
 var help = cli.HelpCommand("display help information")
 
@@ -79,7 +79,7 @@ var versionCli = &cli.Command{
 	Desc: "get the version of tokenbalance server",
 	Argv: func() interface{} { return new(argT) },
 	Fn: func(ctx *cli.Context) error {
-		ctx.String(version + "\n")
+		ctx.String(VERSION + "\n")
 		return nil
 	},
 }
@@ -133,7 +133,7 @@ func GetAccount(contract string, wallet string) (*BalanceResponse, error) {
 
 	response.Balance, err = token.BalanceOf(nil, response.Wallet)
 	if err != nil {
-		log.Printf("Failed to get balance from contract:  %v \n", contract, err)
+		log.Printf("Failed to get balance from contract: %v %v\n", contract, err)
 	}
 
 	response.Symbol, err = token.Symbol(nil)

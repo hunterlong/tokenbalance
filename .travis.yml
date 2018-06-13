@@ -4,28 +4,20 @@ os:
   - linux
 
 go:
-  - 1.9
+  - "1.10.x"
 
 sudo: required
 
 services:
   - docker
 
-cache:
-  bundler: true
-  directories:
-    - $HOME/docker
-
-before_cache:
-  # Save tagged docker images
-  - >
-    mkdir -p $HOME/docker && docker images -a --filter='dangling=false' --format '{{.Repository}}:{{.Tag}} {{.ID}}'
-    | xargs -n 2 -t sh -c 'test -e $HOME/docker/$1.tar.gz || docker save $0 | gzip -2 > $HOME/docker/$1.tar.gz'
+env:
+  - VERSION=1.51
 
 before_deploy:
   - git config --local user.name "hunterlong"
   - git config --local user.email "info@socialeck.com"
-  - git tag "TokenBalance-$(date +'%Y%m%d%H%M%S')"
+  - git tag "v$VERSION" --force
 deploy:
   provider: releases
   api_key: $GH_TOKEN
@@ -34,15 +26,19 @@ deploy:
     - "build/tokenbalance-osx-x32"
     - "build/tokenbalance-linux-x64"
     - "build/tokenbalance-linux-x32"
+    - "build/tokenbalance-linux-arm7"
+    - "build/tokenbalance-linux-arm64"
     - "build/tokenbalance-windows-x64.exe"
     - "build/tokenbalance-windows-x32.exe"
   skip_cleanup: true
 
 before_install:
-  - if [[ -d $HOME/docker ]]; then ls $HOME/docker/*.tar.gz | xargs -I {file} sh -c "zcat {file} | docker load"; fi
-  - docker pull karalabe/xgo-latest
+  - if [[ "$TRAVIS_BRANCH" == "master" ]]; then travis_wait 30 docker pull karalabe/xgo-latest; fi
 
 before_script:
+  - go get github.com/stretchr/testify/assert
+  - go get golang.org/x/tools/cmd/cover
+  - go get github.com/rendon/testcli
   - go get github.com/karalabe/xgo
 
 script:

@@ -2,12 +2,14 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/types"
 	"github.com/gorilla/mux"
 	"log"
 	"math/big"
 	"net/http"
+	"time"
 )
 
 type BalanceResponse struct {
@@ -72,9 +74,16 @@ func getBalanceHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func StartServer() {
-	log.Println("TokenBalance Server Running: http://" + UseIP + ":" + UsePort)
-	http.Handle("/", Router())
-	http.ListenAndServe(UseIP+":"+UsePort, nil)
+	log.Printf("TokenBalance Server Running: http://%v:%v", UseIP, UsePort)
+	routes := Router()
+	srv := &http.Server{
+		Addr:         fmt.Sprintf("%v:%v", UseIP, UsePort),
+		WriteTimeout: time.Second * 15,
+		ReadTimeout:  time.Second * 15,
+		IdleTimeout:  time.Second * 60,
+		Handler:      routes,
+	}
+	srv.ListenAndServe()
 }
 
 func Router() *mux.Router {
