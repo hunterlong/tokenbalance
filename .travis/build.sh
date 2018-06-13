@@ -27,7 +27,6 @@ mv build/$APP-linux-386 build/$APP-linux-x32
 mv build/$APP-windows-6.0-amd64.exe build/$APP-windows-x64.exe
 mv build/$APP-windows-6.0-386.exe build/$APP-windows-x32.exe
 mv build/$APP-linux-arm-7 build/$APP-linux-arm7
-mv build/$APP-linux-arm64 build/$APP-linux-arm64
 
 #tar -czvf build/$APP-android-arm.tar.gz build/$APP-android-16-arm build/$APP-android-16-aar
 #tar -czvf build/$APP-ios-arm.tar.gz build/$APP-ios-5.0-armv7 build/$APP-ios-5.0-framework
