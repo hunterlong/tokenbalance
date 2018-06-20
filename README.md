@@ -5,6 +5,10 @@
 TokenBalance is an easy to use public API and application that will output your [ERC20 Token](https://github.com/ConsenSys/Tokens/blob/master/Token_Contracts/contracts/Token.sol) balance without any troubles. You can run TokenBalance on your local computer or you can use api.tokenbalance.com to easily parse your erc20 token balances.
 Connects to your local geth IPC and prints out a simple JSON response for ethereum token balances. Runs on port *8080* by default if you wish to run locally.
 
+<p align="center">
+<a href="https://github.com/hunterlong/balancebadge"><img src="https://img.balancebadge.io/eth/0x004F3E7fFA2F06EA78e14ED2B13E87d710e8013F.svg?color=green"></a> <a href="https://github.com/hunterlong/balancebadge"><img src="https://img.balancebadge.io/token/0x86fa049857e0209aa7d9e616f7eb3b3b78ecfdb0/0x3bf19a5b8b8cacda07c0ad46c18b27d999c15d0f.svg?color=purple"></a> <a href="https://github.com/hunterlong/balancebadge"><img src="https://img.balancebadge.io/token/0xd26114cd6EE289AccF82350c8d8487fedB8A0C07/0x12a99eb147af05a68ff900d8e9f55d855a41dda7.svg?color=cyan"></a> <a href="https://github.com/hunterlong/balancebadge"><img src="https://img.balancebadge.io/token/0xe41d2489571d322189246dafa5ebde1f4699f498/0xb15bb8a5c133aeb874c2b61252b7f01128574332.svg?color=red"></a>
+</p>
+
 ## Server Status and Uptime
 You can view the current status of Token Balance along with API latency information on our status page. This status page logs the Ethereum Mainnet, Ropsten testnet, and Rinkeby testnet.
 
