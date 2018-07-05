@@ -12,7 +12,7 @@ services:
   - docker
 
 env:
-  - VERSION=1.51
+  - VERSION=1.52
 
 before_deploy:
   - git config --local user.name "hunterlong"
@@ -22,14 +22,15 @@ deploy:
   provider: releases
   api_key: $GH_TOKEN
   file:
-    - "build/tokenbalance-osx-x64"
-    - "build/tokenbalance-osx-x32"
-    - "build/tokenbalance-linux-x64"
-    - "build/tokenbalance-linux-x32"
-    - "build/tokenbalance-linux-arm7"
-    - "build/tokenbalance-linux-arm64"
-    - "build/tokenbalance-windows-x64.exe"
-    - "build/tokenbalance-windows-x32.exe"
+    - "build/tokenbalance-osx-x64.tar.gz"
+    - "build/tokenbalance-osx-x32.tar.gz"
+    - "build/tokenbalance-linux-x64.tar.gz"
+    - "build/tokenbalance-linux-x32.tar.gz"
+    - "build/tokenbalance-linux-arm7.tar.gz"
+    - "build/tokenbalance-linux-arm64.tar.gz"
+    - "build/tokenbalance-linux-alpine.tar.gz"
+    - "build/tokenbalance-windows-x64.zip"
+    - "build/tokenbalance-windows-x32.zip"
   skip_cleanup: true
 
 before_install:

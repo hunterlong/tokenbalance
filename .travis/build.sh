@@ -3,30 +3,49 @@ mkdir build
 
 APP="tokenbalance"
 
-#xgo --targets=*/* --dest=build -ldflags="-X main.VERSION=$VERSION" ./
+rm -rf build
 
-xgo --targets=darwin/amd64 --dest=build -ldflags="-X main.VERSION=$VERSION" ./
-xgo --targets=darwin/386 --dest=build -ldflags="-X main.VERSION=$VERSION" ./
+xgo -go 1.10.x --targets=darwin/amd64 --dest=build -ldflags="-X main.VERSION=$VERSION" ./
+xgo -go 1.10.x --targets=darwin/386 --dest=build -ldflags="-X main.VERSION=$VERSION" ./
+xgo -go 1.10.x --targets=linux/amd64 --dest=build -ldflags="-X main.VERSION=$VERSION" ./
+xgo -go 1.10.x --targets=linux/386 --dest=build -ldflags="-X main.VERSION=$VERSION" ./
+xgo -go 1.10.x --targets=windows-6.0/amd64 --dest=build -ldflags="-X main.VERSION=$VERSION" ./
+xgo -go 1.10.x --targets=windows-6.0/386 --dest=build -ldflags="-X main.VERSION=$VERSION" ./
+xgo -go 1.10.x --targets=linux/arm-7 --dest=build -ldflags="-X main.VERSION=$VERSION" ./
+xgo -go 1.10.x --targets=linux/arm64 --dest=build -ldflags="-X main.VERSION=$VERSION" ./
+xgo -go 1.10.x --targets=linux/arm-7 --dest=build -ldflags="-X main.VERSION=$VERSION" ./
+xgo -go 1.10.x --targets=linux/arm64 --dest=build -ldflags="-X main.VERSION=$VERSION" ./
+xgo -go 1.10.x --targets=linux/amd64 --dest=build -ldflags="-X main.VERSION=$VERSION -linkmode external -extldflags -static" -out alpine ./
 
-xgo --targets=linux/amd64 --dest=build -ldflags="-X main.VERSION=$VERSION" ./
-xgo --targets=linux/386 --dest=build -ldflags="-X main.VERSION=$VERSION" ./
+cd build
+ls
 
-xgo --targets=windows-6.0/amd64 --dest=build -ldflags="-X main.VERSION=$VERSION" ./
-xgo --targets=windows-6.0/386 --dest=build -ldflags="-X main.VERSION=$VERSION" ./
+mv alpine-linux-amd64 $APP
+tar -czvf $APP-linux-alpine.tar.gz $APP && rm -f $APP
 
-xgo --targets=linux/arm-7 --dest=build -ldflags="-X main.VERSION=$VERSION" ./
-xgo --targets=linux/arm64 --dest=build -ldflags="-X main.VERSION=$VERSION" ./
+mv $APP-darwin-10.6-amd64 $APP
+tar -czvf $APP-osx-x64.tar.gz $APP && rm -f $APP
 
-#xgo --targets=android-16/arm --dest=build -ldflags="-X main.VERSION=$VERSION" ./
-#xgo --targets=ios/arm-7 --dest=build -ldflags="-X main.VERSION=$VERSION" ./
+mv $APP-darwin-10.6-386 $APP
+tar -czvf $APP-osx-x32.tar.gz $APP && rm -f $APP
 
-mv build/$APP-darwin-10.6-amd64 build/$APP-osx-x64
-mv build/$APP-darwin-10.6-386 build/$APP-osx-x32
-mv build/$APP-linux-amd64 build/$APP-linux-x64
-mv build/$APP-linux-386 build/$APP-linux-x32
-mv build/$APP-windows-6.0-amd64.exe build/$APP-windows-x64.exe
-mv build/$APP-windows-6.0-386.exe build/$APP-windows-x32.exe
-mv build/$APP-linux-arm-7 build/$APP-linux-arm7
+mv $APP-linux-amd64 $APP
+tar -czvf $APP-linux-x64.tar.gz $APP && rm -f $APP
+
+mv $APP-linux-386 $APP
+tar -czvf $APP-linux-x32.tar.gz $APP && rm -f $APP
+
+mv $APP-windows-6.0-amd64.exe $APP.exe
+zip $APP-windows-x64.zip $APP.exe  && rm -f $APP.exe
+
+mv $APP-windows-6.0-386.exe $APP.exe
+zip $APP-windows-x32.zip $APP.exe  && rm -f $APP.exe
+
+mv $APP-linux-arm-7 $APP
+tar -czvf $APP-linux-arm7.tar.gz $APP && rm -f $APP
+
+mv $APP-linux-arm64 $APP
+tar -czvf $APP-linux-arm64.tar.gz $APP && rm -f $APP
 
 #tar -czvf build/$APP-android-arm.tar.gz build/$APP-android-16-arm build/$APP-android-16-aar
 #tar -czvf build/$APP-ios-arm.tar.gz build/$APP-ios-5.0-armv7 build/$APP-ios-5.0-framework
