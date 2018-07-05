@@ -20,31 +20,31 @@ xgo -go 1.10.x --targets=linux/amd64 --dest=build -ldflags="-X main.VERSION=$VER
 cd build
 ls
 
-mv alpine-linux-amd64 $APP
+sudo mv alpine-linux-amd64 $APP
 tar -czvf $APP-linux-alpine.tar.gz $APP && rm -f $APP
 
-mv $APP-darwin-10.6-amd64 $APP
+sudo mv $APP-darwin-10.6-amd64 $APP
 tar -czvf $APP-osx-x64.tar.gz $APP && rm -f $APP
 
-mv $APP-darwin-10.6-386 $APP
+sudo mv $APP-darwin-10.6-386 $APP
 tar -czvf $APP-osx-x32.tar.gz $APP && rm -f $APP
 
-mv $APP-linux-amd64 $APP
+sudo mv $APP-linux-amd64 $APP
 tar -czvf $APP-linux-x64.tar.gz $APP && rm -f $APP
 
-mv $APP-linux-386 $APP
+sudo mv $APP-linux-386 $APP
 tar -czvf $APP-linux-x32.tar.gz $APP && rm -f $APP
 
-mv $APP-windows-6.0-amd64.exe $APP.exe
+sudo mv $APP-windows-6.0-amd64.exe $APP.exe
 zip $APP-windows-x64.zip $APP.exe  && rm -f $APP.exe
 
-mv $APP-windows-6.0-386.exe $APP.exe
+sudo mv $APP-windows-6.0-386.exe $APP.exe
 zip $APP-windows-x32.zip $APP.exe  && rm -f $APP.exe
 
-mv $APP-linux-arm-7 $APP
+sudo mv $APP-linux-arm-7 $APP
 tar -czvf $APP-linux-arm7.tar.gz $APP && rm -f $APP
 
-mv $APP-linux-arm64 $APP
+sudo mv $APP-linux-arm64 $APP
 tar -czvf $APP-linux-arm64.tar.gz $APP && rm -f $APP
 
 #tar -czvf build/$APP-android-arm.tar.gz build/$APP-android-16-arm build/$APP-android-16-aar
