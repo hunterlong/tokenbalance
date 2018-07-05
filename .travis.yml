@@ -41,8 +41,8 @@ before_script:
   - go get
 
 after_success:
-  - if [[ "$TRAVIS_BRANCH" == "master" ]]; then travis_wait 30 docker pull karalabe/xgo-latest; fi
-  - if [[ "$TRAVIS_BRANCH" == "master" ]]; then /bin/bash -c .travis/build.sh; fi
+  - travis_wait 30 docker pull karalabe/xgo-latest
+  - /bin/bash -c .travis/build.sh
 
 script:
   - go test -v
