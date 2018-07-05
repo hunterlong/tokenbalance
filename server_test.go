@@ -70,7 +70,7 @@ func TestTokenJson(t *testing.T) {
 	assert.Equal(t, int64(6), d.Decimals, "should be decimals")
 	assert.Equal(t, "DTT", d.Symbol, "should be symbol")
 	assert.Equal(t, "10000.0", d.Balance, "should be Token balance")
-	assert.Equal(t, "50.0", d.EthBalance, "should be ETH balance")
+	assert.Equal(t, "49.999936999999995635", d.EthBalance, "should be ETH balance")
 }
 
 func TestFailingTokenJson(t *testing.T) {
