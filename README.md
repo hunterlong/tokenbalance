@@ -88,6 +88,10 @@ Feel free to use the TokenBalance API server to fetch ERC20 token balances and d
 # Run Your Own Server
 TokenBalance isn't just an API, it's an opensource HTTP server that you can run on your own computer or server.
 
+<p align="center"><img width="85%" src="https://img.cjx.io/tokenbalanceunix.gif">
+<img width="85%" src="https://img.cjx.io/tokenbalancewindows.gif">
+</p>
+
 ## Installation
 ##### Ubuntu 16.04
 ```bash
@@ -127,7 +131,3 @@ curl https://api.tokenbalance.com/token/$CONTRACT/$ETH_ADDRESS
     "block": 4274167
 }
 ```
-
-<p align="center">
-  <img width="420" src="https://github.com/hunterlong/tokenbalance.com/blob/master/images/website.png?raw=true" alt="tokenbalance eth token contracts"/>
-</p>
