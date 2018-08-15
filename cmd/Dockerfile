@@ -1,6 +1,6 @@
 FROM alpine:latest
 
-ENV VERSION=1.54
+ENV VERSION=1.55
 
 RUN apk --no-cache add libstdc++ ca-certificates
 RUN wget -q https://github.com/hunterlong/tokenbalance/releases/download/v$VERSION/tokenbalance-linux-alpine.tar.gz && \
