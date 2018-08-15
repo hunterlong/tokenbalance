@@ -19,7 +19,7 @@ var (
 
 func New(contract, wallet string) (*tokenBalance, error) {
 	var err error
-	if conn == nil {
+	if config == nil || conn == nil {
 		return nil, errors.New("geth server connection has not been created")
 	}
 	tb := &tokenBalance{
@@ -48,15 +48,16 @@ func (c *Config) Connect() error {
 	if c.GethLocation == "" {
 		return errors.New("geth endpoint has not been set")
 	}
-	conn, err = ethclient.Dial(c.GethLocation)
+	ethConn, err := ethclient.Dial(c.GethLocation)
 	if err != nil {
 		return err
 	}
-	block, err := conn.BlockByNumber(context.TODO(), nil)
+	block, err := ethConn.BlockByNumber(context.TODO(), nil)
 	if block == nil {
 		return err
 	}
 	config = c
+	conn = ethConn
 	log(fmt.Sprintf("Connected to Geth at: %v\n", c.GethLocation), false)
 	return err
 }

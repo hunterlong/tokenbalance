@@ -15,6 +15,11 @@ func TestFailedConnection(t *testing.T) {
 	assert.Error(t, err)
 }
 
+func TestFailingNoConfig(t *testing.T) {
+	_, err := New("0xd26114cd6EE289AccF82350c8d8487fedB8A0C07", "0x42d4722b804585cdf6406fa7739e794b0aa8b1ff")
+	assert.Error(t, err)
+}
+
 func TestConnection(t *testing.T) {
 	c := &Config{
 		GethLocation: "https://eth.coinapp.io",
@@ -54,6 +59,11 @@ func TestFormatVerySmallDecimal(t *testing.T) {
 func TestFailedNewTokenBalance(t *testing.T) {
 	_, err := New("0x42D4722B804585CDf6406fa7739e794b0Aa8b1FF", "0x42d4722b804585cdf6406fa7739e794b0aa8b1ff")
 	assert.Error(t, err)
+}
+
+func TestSymbolFix(t *testing.T) {
+	symbol := symbolFix("0x86Fa049857E0209aa7D9e616F7eb3b3B78ECfdb0")
+	assert.Equal(t, "EOS", symbol)
 }
 
 func TestNewTokenBalance(t *testing.T) {
