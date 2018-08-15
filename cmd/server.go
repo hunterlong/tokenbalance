@@ -43,9 +43,11 @@ func getTokenHandler(w http.ResponseWriter, r *http.Request) {
 			Error:   true,
 			Message: err.Error(),
 		}
+		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusNotFound)
 		json.NewEncoder(w).Encode(m)
 	} else {
+		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
 		json.NewEncoder(w).Encode(query.ToJSON())
 	}
