@@ -22,6 +22,15 @@ func main() {
 	}
 }
 
+
+type commandArgs struct {
+	cli.Helper
+	Geth string `cli:"*g,geth" usage:"attach geth IPC or HTTP location" dft:"https://eth.coinapp.io"`
+	IP   string `cli:"ip" usage:"Bind to IP Address" dft:"0.0.0.0"`
+	Port int    `cli:"p,port" usage:"HTTP server port for token information in JSON" dft:"8080"`
+	Logs bool    `cli:"l,logs" usage:"Output logs on each transaction" dft:"true"`
+}
+
 var help = cli.HelpCommand("display help information")
 
 type rootT struct {
@@ -53,7 +62,7 @@ var startCommand = &cli.Command{
 		argv := ctx.Argv().(*commandArgs)
 		configs = &tb.Config{
 			GethLocation: argv.Geth,
-			Logs:         true,
+			Logs:         argv.Logs,
 		}
 		err := configs.Connect()
 		if err != nil {
@@ -71,13 +80,6 @@ var versionCommand = &cli.Command{
 		ctx.String(tb.VERSION + "\n")
 		return nil
 	},
-}
-
-type commandArgs struct {
-	cli.Helper
-	Geth string `cli:"*g,geth" usage:"attach geth IPC or HTTP location"`
-	IP   string `cli:"ip" usage:"Bind to IP Address" dft:"0.0.0.0"`
-	Port int    `cli:"p,port" usage:"HTTP server port for token information in JSON" dft:"8080"`
 }
 
 type errorResponse struct {
