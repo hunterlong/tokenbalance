@@ -11,13 +11,11 @@ sudo: required
 services:
   - docker
 
-env:
-  - VERSION=1.52
-
 before_deploy:
   - git config --local user.name "hunterlong"
   - git config --local user.email "info@socialeck.com"
-  - git tag "v$VERSION" --force
+  - make tag
+
 deploy:
   provider: releases
   api_key: $GH_TOKEN
@@ -34,15 +32,12 @@ deploy:
   skip_cleanup: true
 
 before_script:
-  - go get github.com/stretchr/testify/assert
-  - go get golang.org/x/tools/cmd/cover
-  - go get github.com/rendon/testcli
-  - go get github.com/karalabe/xgo
-  - go get
+  - make deps
+
+script:
+  - make test
+  - make coverage
 
 after_success:
   - travis_wait 30 docker pull karalabe/xgo-latest
-  - /bin/bash -c .travis/build.sh
-
-script:
-  - go test -v
+  - make release

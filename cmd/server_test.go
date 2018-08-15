@@ -2,9 +2,8 @@ package main
 
 import (
 	"encoding/json"
-	"github.com/ethereum/go-ethereum/ethclient"
+	tb "github.com/hunterlong/tokenbalance"
 	"github.com/stretchr/testify/assert"
-	"math/big"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -14,40 +13,23 @@ func init() {
 	http.Handle("/", Router())
 }
 
-func TestConnection(t *testing.T) {
-	var err error
-	url := "https://ropsten.infura.io/dZfBqHazp5fzdZVJ4Byc"
-	conn, err = ethclient.Dial(url)
+func TestConfig(t *testing.T) {
+	configs = &tb.Config{
+		GethLocation: "https://ropsten.coinapp.io",
+		UsePort:      8080,
+		UseIP:        "0.0.0.0",
+		Logs:         true,
+	}
+	err := configs.Connect()
 	assert.Nil(t, err)
-}
-
-func TestFormatDecimal(t *testing.T) {
-	number := big.NewInt(0)
-	number.SetString("72094368689712", 10)
-	tokenCorrected := BigIntDecimal(number, 18)
-	assert.Equal(t, "0.000072094368689712", tokenCorrected)
-}
-
-func TestFormatSmallDecimal(t *testing.T) {
-	number := big.NewInt(0)
-	number.SetString("123", 10)
-	tokenCorrected := BigIntDecimal(number, 18)
-	assert.Equal(t, "0.000000000000000123", tokenCorrected)
-}
-
-func TestFormatVerySmallDecimal(t *testing.T) {
-	number := big.NewInt(0)
-	number.SetString("1142400000000001", 10)
-	tokenCorrected := BigIntDecimal(number, 18)
-	assert.Equal(t, "0.001142400000000001", tokenCorrected)
 }
 
 func TestBalanceCheck(t *testing.T) {
-	req, err := http.NewRequest("GET", "/balance/0xcad9c6677f51b936408ca3631220c9e45a9af0f6/0x17a813df7322f8aac5cac75eb62c0d13b8aea29d", nil)
+	req, err := http.NewRequest("GET", "/balance/0xcad9c6677f51b936408ca3631220c9e45a9af0f6/0xbfd04af48c978cc0d9bc5e06d9593cb4fb7f6f98", nil)
 	assert.Nil(t, err)
 	rr := httptest.NewRecorder()
 	Router().ServeHTTP(rr, req)
-	assert.Equal(t, "10000.0", rr.Body.String(), "should be balance")
+	assert.Equal(t, "929955618.999999", rr.Body.String(), "should be balance")
 }
 
 func TestFailingBalanceCheck(t *testing.T) {
@@ -62,7 +44,7 @@ func TestTokenJson(t *testing.T) {
 	assert.Nil(t, err)
 	rr := httptest.NewRecorder()
 	Router().ServeHTTP(rr, req)
-	var d jsonResponse
+	var d tb.TokenBalanceJson
 	json.Unmarshal(rr.Body.Bytes(), &d)
 
 	assert.Equal(t, "DreamTeam Token", d.Name, "should be token name")
@@ -70,7 +52,7 @@ func TestTokenJson(t *testing.T) {
 	assert.Equal(t, int64(6), d.Decimals, "should be decimals")
 	assert.Equal(t, "DTT", d.Symbol, "should be symbol")
 	assert.Equal(t, "10000.0", d.Balance, "should be Token balance")
-	assert.Equal(t, "49.999936999999995635", d.EthBalance, "should be ETH balance")
+	assert.Equal(t, "49.999936999999995635", d.ETH, "should be ETH balance")
 }
 
 func TestFailingTokenJson(t *testing.T) {
@@ -81,9 +63,11 @@ func TestFailingTokenJson(t *testing.T) {
 }
 
 func TestMainnetConnection(t *testing.T) {
-	var err error
-	url := "https://mainnet.infura.io/dZfBqHazp5fzdZVJ4Byc"
-	conn, err = ethclient.Dial(url)
+	configs = &tb.Config{
+		GethLocation: "https://eth.coinapp.io",
+		Logs:         true,
+	}
+	err := configs.Connect()
 	assert.Nil(t, err)
 }
 
@@ -92,7 +76,7 @@ func TestMainnetTokenJson(t *testing.T) {
 	assert.Nil(t, err)
 	rr := httptest.NewRecorder()
 	Router().ServeHTTP(rr, req)
-	var d jsonResponse
+	var d tb.TokenBalanceJson
 	json.Unmarshal(rr.Body.Bytes(), &d)
 	assert.Equal(t, "OMGToken", d.Name, "should be token name")
 	assert.Equal(t, "0x42D4722B804585CDf6406fa7739e794b0Aa8b1FF", d.Wallet, "should be wallet address")
@@ -106,7 +90,7 @@ func TestMainnetEOSTokenJson(t *testing.T) {
 	assert.Nil(t, err)
 	rr := httptest.NewRecorder()
 	Router().ServeHTTP(rr, req)
-	var d jsonResponse
+	var d tb.TokenBalanceJson
 	json.Unmarshal(rr.Body.Bytes(), &d)
 	assert.Equal(t, "", d.Name, "should be token name")
 	assert.Equal(t, "0xbfaA1A1EA534d35199E84859975648B59880f639", d.Wallet, "should be wallet address")
