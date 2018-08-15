@@ -46,12 +46,6 @@ func log(message string, error bool) {
 
 func (c *Config) Connect() error {
 	var err error
-	if c.UsePort == 0 {
-		c.UsePort = 8080
-	}
-	if c.UseIP == "" {
-		c.UseIP = "localhost"
-	}
 	conn, err = ethclient.Dial(c.GethLocation)
 	config = c
 	if err != nil {

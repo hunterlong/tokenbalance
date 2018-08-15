@@ -8,8 +8,6 @@ import (
 
 type Config struct {
 	GethLocation string
-	UsePort      int
-	UseIP        string
 	Logs         bool
 }
 

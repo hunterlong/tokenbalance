@@ -48,34 +48,32 @@ var rootCommand = &cli.Command{
 var startCommand = &cli.Command{
 	Name: "start",
 	Desc: "run the tokenbalance http server",
-	Argv: func() interface{} { return new(argT) },
+	Argv: func() interface{} { return new(commandArgs) },
 	Fn: func(ctx *cli.Context) error {
-		argv := ctx.Argv().(*argT)
+		argv := ctx.Argv().(*commandArgs)
 		configs = &tb.Config{
 			GethLocation: argv.Geth,
-			UsePort:      argv.Port,
-			UseIP:        argv.IP,
 			Logs:         true,
 		}
 		err := configs.Connect()
 		if err != nil {
 			return err
 		}
-		return StartServer()
+		return startServer(argv.IP, argv.Port)
 	},
 }
 
 var versionCommand = &cli.Command{
 	Name: "version",
 	Desc: "get the version of tokenbalance server",
-	Argv: func() interface{} { return new(argT) },
+	Argv: func() interface{} { return new(commandArgs) },
 	Fn: func(ctx *cli.Context) error {
 		ctx.String(tb.VERSION + "\n")
 		return nil
 	},
 }
 
-type argT struct {
+type commandArgs struct {
 	cli.Helper
 	Geth string `cli:"*g,geth" usage:"attach geth IPC or HTTP location"`
 	IP   string `cli:"ip" usage:"Bind to IP Address" dft:"0.0.0.0"`

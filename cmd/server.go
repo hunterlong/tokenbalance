@@ -10,18 +10,18 @@ import (
 	"time"
 )
 
-func Router() *mux.Router {
+func router() *mux.Router {
 	r := mux.NewRouter()
 	r.HandleFunc("/balance/{contract}/{wallet}", getBalanceHandler).Methods("GET")
 	r.HandleFunc("/token/{contract}/{wallet}", getTokenHandler).Methods("GET")
 	return r
 }
 
-func StartServer() error {
-	log.Printf("TokenBalance Server Running: http://%v:%v", configs.UseIP, configs.UsePort)
-	routes := Router()
+func startServer(ip string, port int) error {
+	log.Printf("TokenBalance Server Running: http://%v:%v", ip, port)
+	routes := router()
 	srv := &http.Server{
-		Addr:         fmt.Sprintf("%v:%v", configs.UseIP, configs.UsePort),
+		Addr:         fmt.Sprintf("%v:%v", ip, port),
 		WriteTimeout: time.Second * 15,
 		ReadTimeout:  time.Second * 15,
 		IdleTimeout:  time.Second * 60,
