@@ -37,7 +37,7 @@ func getTokenHandler(w http.ResponseWriter, r *http.Request) {
 
 	log.Println("Fetching /token for Wallet:", wallet, "at Contract:", contract)
 
-	query, err := tb.NewTokenBalance(contract, wallet)
+	query, err := tb.New(contract, wallet)
 	if err != nil {
 		m := errorResponse{
 			Error:   true,
@@ -59,7 +59,7 @@ func getBalanceHandler(w http.ResponseWriter, r *http.Request) {
 
 	log.Println("Fetching /balance for Wallet:", wallet, "at Contract:", contract)
 
-	query, err := tb.NewTokenBalance(contract, wallet)
+	query, err := tb.New(contract, wallet)
 	if err != nil {
 		w.Header().Set("Content-Type", "text/plain")
 		w.WriteHeader(http.StatusNotFound)

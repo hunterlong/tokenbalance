@@ -18,7 +18,7 @@ var (
 	VERSION string
 )
 
-func NewTokenBalance(contract, wallet string) (*TokenBalance, error) {
+func New(contract, wallet string) (*TokenBalance, error) {
 	var err error
 	if conn == nil {
 		return nil, errors.New("geth server connection has not been created")

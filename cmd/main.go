@@ -22,13 +22,12 @@ func main() {
 	}
 }
 
-
 type commandArgs struct {
 	cli.Helper
 	Geth string `cli:"*g,geth" usage:"attach geth IPC or HTTP location" dft:"https://eth.coinapp.io"`
 	IP   string `cli:"ip" usage:"Bind to IP Address" dft:"0.0.0.0"`
 	Port int    `cli:"p,port" usage:"HTTP server port for token information in JSON" dft:"8080"`
-	Logs bool    `cli:"l,logs" usage:"Output logs on each transaction" dft:"true"`
+	Logs bool   `cli:"l,logs" usage:"Output logs on each transaction" dft:"true"`
 }
 
 var help = cli.HelpCommand("display help information")

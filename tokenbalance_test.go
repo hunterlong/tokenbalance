@@ -36,8 +36,13 @@ func TestFormatVerySmallDecimal(t *testing.T) {
 	assert.Equal(t, "0.001142400000000001", tokenCorrected)
 }
 
+func TestFailedNewTokenBalance(t *testing.T) {
+	_, err := New("0x42D4722B804585CDf6406fa7739e794b0Aa8b1FF", "0x42d4722b804585cdf6406fa7739e794b0aa8b1ff")
+	assert.Error(t, err)
+}
+
 func TestNewTokenBalance(t *testing.T) {
-	tb, err := NewTokenBalance("0xd26114cd6EE289AccF82350c8d8487fedB8A0C07", "0x42d4722b804585cdf6406fa7739e794b0aa8b1ff")
+	tb, err := New("0xd26114cd6EE289AccF82350c8d8487fedB8A0C07", "0x42d4722b804585cdf6406fa7739e794b0aa8b1ff")
 	assert.Nil(t, err)
 	assert.Equal(t, "0x42D4722B804585CDf6406fa7739e794b0Aa8b1FF", tb.Wallet.String())
 	assert.Equal(t, "0xd26114cd6EE289AccF82350c8d8487fedB8A0C07", tb.Contract.String())

@@ -81,12 +81,12 @@ You can use Token Balance as a typical Go Language package if you you like to im
 ###### First you'll want to connect to your Geth server or IPC
 ```go
 import (
-    tb "github.com/hunterlong/tokenbalance"
+    "github.com/hunterlong/tokenbalance"
 )
 
 func main() {
 	// connect to your Geth Server
-    configs = &tb.Config{
+    configs = &tokenbalance.Config{
          GethLocation: "https://eth.coinapp.io",
          Logs:         true,
     }
@@ -97,7 +97,7 @@ func main() {
     wallet := "0xbfaa1a1ea534d35199e84859975648b59880f639"
     
     // query the blockchain and wallet details
-    token, _ := tb.NewTokenBalance(contract, wallet)
+    token, _ := tokenbalance.New(contract, wallet)
     
     // Token Balance will respond back useful things
     token.BalanceString()  // "600000.0"
