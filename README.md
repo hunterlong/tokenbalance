@@ -1,7 +1,7 @@
 ![TokenBalance](http://i.imgur.com/43Blvht.jpg)
 
 
-# TokenBalance API [![Build Status](https://travis-ci.org/hunterlong/tokenbalance.svg?branch=master)](https://travis-ci.org/hunterlong/tokenbalance) [![Docker Build Status](https://img.shields.io/docker/build/hunterlong/tokenbalance.svg)](https://hub.docker.com/r/hunterlong/tokenbalance/)
+# TokenBalance API [![Build Status](https://travis-ci.org/hunterlong/tokenbalance.svg?branch=master)](https://travis-ci.org/hunterlong/tokenbalance) [![Docker Build Status](https://img.shields.io/docker/build/hunterlong/tokenbalance.svg)](https://hub.docker.com/r/hunterlong/tokenbalance/) [![Coverage Status](https://coveralls.io/repos/github/hunterlong/tokenbalance/badge.svg?branch=master)](https://coveralls.io/github/hunterlong/tokenbalance?branch=master)
 TokenBalance is an easy to use public API and application that will output your [ERC20 Token](https://github.com/ConsenSys/Tokens/blob/master/Token_Contracts/contracts/Token.sol) balance without any troubles. You can run TokenBalance on your local computer or you can use api.tokenbalance.com to easily parse your erc20 token balances.
 Connects to your local geth IPC and prints out a simple JSON response for ethereum token balances. Runs on port *8080* by default if you wish to run locally.
 
@@ -97,22 +97,23 @@ func main() {
     wallet := "0xbfaa1a1ea534d35199e84859975648b59880f639"
     
     // query the blockchain and wallet details
-    token, _ := tokenbalance.New(contract, wallet)
+    token, err := tokenbalance.New(contract, wallet)
     
     // Token Balance will respond back useful things
     token.BalanceString()  // "600000.0"
     token.ETHString()      // "1.020095885777777767"
-    token.Name             // "OmiseGo"
+    token.Name             // "OmiseGO"
     token.Symbol           // "OMG"
-    token.Balance          // big.Int()
-    token.ETH              // big.Int()
+    token.Decimals         // 18
+    token.Balance          // big.Int() (token balance)
+    token.ETH              // big.Int() (ether balance)
 }
 ```
 
 # Implement in Google Sheets
 If your familiar with Google Sheets, you can easily fetch all of your cryptocurrency balances within 1 spreadsheet. All you need to do is make a cell with the value below.
 ```
-=ImportData("https://api.tokenbalance.com/balance/39bb259f66e1c59d5abef88375979b4d20d98022/0xf9578adc61d07671f536d50afc5800232fc9fd86")
+=ImportData("https://api.tokenbalance.com/balance/0xd26114cd6EE289AccF82350c8d8487fedB8A0C07/0xf9578adc61d07671f536d50afc5800232fc9fd86")
 ```
 Simple as that! Get creative an use Coin Market Cap's API to fetch the price and multiply with your balance to make a portfolio of your cryptocurrencies!
 
@@ -131,7 +132,7 @@ TokenBalance isn't just an API, it's an opensource HTTP server that you can run 
 ```bash
 git clone https://github.com/hunterlong/tokenbalance
 cd tokenbalance
-go get && go build .
+go get && go build ./cmd
 ```
 
 ## Start TokenBalance Server
