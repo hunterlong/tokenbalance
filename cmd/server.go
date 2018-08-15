@@ -18,25 +18,25 @@ func router() *mux.Router {
 }
 
 func startServer(ip string, port int) error {
-	log.Printf("TokenBalance Server Running: http://%v:%v", ip, port)
-	routes := router()
+	log.Printf("tokenBalance Server Running: http://%v:%v", ip, port)
 	srv := &http.Server{
 		Addr:         fmt.Sprintf("%v:%v", ip, port),
 		WriteTimeout: time.Second * 15,
 		ReadTimeout:  time.Second * 15,
 		IdleTimeout:  time.Second * 60,
-		Handler:      routes,
+		Handler:      router(),
 	}
 	return srv.ListenAndServe()
 }
 
-func getTokenHandler(w http.ResponseWriter, r *http.Request) {
+func collectVars(r *http.Request) (string, string) {
 	vars := mux.Vars(r)
-	contract := vars["contract"]
-	wallet := vars["wallet"]
+	return vars["contract"], vars["wallet"]
+}
 
+func getTokenHandler(w http.ResponseWriter, r *http.Request) {
+	contract, wallet := collectVars(r)
 	log.Println("Fetching /token for Wallet:", wallet, "at Contract:", contract)
-
 	query, err := tb.New(contract, wallet)
 	if err != nil {
 		m := errorResponse{
@@ -47,18 +47,14 @@ func getTokenHandler(w http.ResponseWriter, r *http.Request) {
 		json.NewEncoder(w).Encode(m)
 	} else {
 		w.WriteHeader(http.StatusOK)
-		w.Write([]byte(query.ToJSON()))
+		json.NewEncoder(w).Encode(query.ToJSON())
 	}
 
 }
 
 func getBalanceHandler(w http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)
-	contract := vars["contract"]
-	wallet := vars["wallet"]
-
+	contract, wallet := collectVars(r)
 	log.Println("Fetching /balance for Wallet:", wallet, "at Contract:", contract)
-
 	query, err := tb.New(contract, wallet)
 	if err != nil {
 		w.Header().Set("Content-Type", "text/plain")

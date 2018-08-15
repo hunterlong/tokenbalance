@@ -6,6 +6,15 @@ import (
 	"testing"
 )
 
+func TestFailedConnection(t *testing.T) {
+	c := &Config{
+		GethLocation: "https://google.com",
+		Logs:         true,
+	}
+	err := c.Connect()
+	assert.Error(t, err)
+}
+
 func TestConnection(t *testing.T) {
 	c := &Config{
 		GethLocation: "https://eth.coinapp.io",
@@ -13,6 +22,12 @@ func TestConnection(t *testing.T) {
 	}
 	err := c.Connect()
 	assert.Nil(t, err)
+}
+
+func TestZeroDecimal(t *testing.T) {
+	number := big.NewInt(0)
+	tokenCorrected := BigIntString(number, 18)
+	assert.Equal(t, "0.0", tokenCorrected)
 }
 
 func TestFormatDecimal(t *testing.T) {
@@ -50,4 +65,5 @@ func TestNewTokenBalance(t *testing.T) {
 	assert.Equal(t, "1.020095885777777767", tb.ETHString())
 	assert.Equal(t, int64(18), tb.Decimals)
 	assert.Equal(t, "OMG", tb.Symbol)
+	assert.Equal(t, "OMG", tb.ToJSON().Symbol)
 }

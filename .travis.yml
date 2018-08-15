@@ -35,6 +35,7 @@ before_script:
   - make deps
 
 script:
+  - make install
   - make test
   - make coverage
 

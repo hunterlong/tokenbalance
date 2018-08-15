@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	tb "github.com/hunterlong/tokenbalance"
+	"github.com/mkideal/cli"
 	"github.com/stretchr/testify/assert"
 	"net/http"
 	"net/http/httptest"
@@ -11,6 +12,39 @@ import (
 
 func init() {
 	http.Handle("/", router())
+}
+
+func TestVersionCLICommand(t *testing.T) {
+	app := &cli.Command{}
+	app.Register(versionCommand)
+	err := app.Run([]string{"version"})
+	assert.Nil(t, err)
+}
+
+func TestStartCLICommand(t *testing.T) {
+	app := &cli.Command{}
+	app.Register(startCommand)
+	err := app.Run([]string{"start", "--geth", "https://google.com"})
+	assert.Error(t, err)
+}
+
+func TestHelpCLICommand(t *testing.T) {
+	app := &cli.Command{}
+	app.Register(help)
+	err := app.Run([]string{"help"})
+	assert.Nil(t, err)
+}
+
+func TestRootCLICommand(t *testing.T) {
+	app := &cli.Command{}
+	app.Register(rootCommand)
+	err := app.Run([]string{"tokenbalance"})
+	assert.Nil(t, err)
+}
+
+func TestFailedHTTPServer(t *testing.T) {
+	err := startServer("google.com", 8080)
+	assert.Error(t, err)
 }
 
 func TestConfig(t *testing.T) {
@@ -42,7 +76,7 @@ func TestTokenJson(t *testing.T) {
 	assert.Nil(t, err)
 	rr := httptest.NewRecorder()
 	router().ServeHTTP(rr, req)
-	var d tb.TokenBalanceJson
+	var d tokenBalanceJson
 	json.Unmarshal(rr.Body.Bytes(), &d)
 
 	assert.Equal(t, "DreamTeam Token", d.Name, "should be token name")
@@ -74,7 +108,7 @@ func TestMainnetTokenJson(t *testing.T) {
 	assert.Nil(t, err)
 	rr := httptest.NewRecorder()
 	router().ServeHTTP(rr, req)
-	var d tb.TokenBalanceJson
+	var d tokenBalanceJson
 	json.Unmarshal(rr.Body.Bytes(), &d)
 	assert.Equal(t, "OMGToken", d.Name, "should be token name")
 	assert.Equal(t, "0x42D4722B804585CDf6406fa7739e794b0Aa8b1FF", d.Wallet, "should be wallet address")
@@ -88,11 +122,22 @@ func TestMainnetEOSTokenJson(t *testing.T) {
 	assert.Nil(t, err)
 	rr := httptest.NewRecorder()
 	router().ServeHTTP(rr, req)
-	var d tb.TokenBalanceJson
+	var d tokenBalanceJson
 	json.Unmarshal(rr.Body.Bytes(), &d)
 	assert.Equal(t, "", d.Name, "should be token name")
 	assert.Equal(t, "0xbfaA1A1EA534d35199E84859975648B59880f639", d.Wallet, "should be wallet address")
 	assert.Equal(t, int64(18), d.Decimals, "should be decimals")
 	assert.Equal(t, "EOS", d.Symbol, "should be symbol")
 	assert.Equal(t, "8750000.0", d.Balance, "should be Token balance")
+}
+
+type tokenBalanceJson struct {
+	Contract string `json:"token,omitempty"`
+	Wallet   string `json:"wallet,omitempty"`
+	Name     string `json:"name,omitempty"`
+	Symbol   string `json:"symbol,omitempty"`
+	Balance  string `json:"balance"`
+	ETH      string `json:"eth_balance,omitempty"`
+	Decimals int64  `json:"decimals,omitempty"`
+	Block    int64  `json:"block,omitempty"`
 }

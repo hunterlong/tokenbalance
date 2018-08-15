@@ -11,7 +11,7 @@ type Config struct {
 	Logs         bool
 }
 
-type TokenBalance struct {
+type tokenBalance struct {
 	Contract common.Address
 	Wallet   common.Address
 	Name     string
@@ -23,7 +23,7 @@ type TokenBalance struct {
 	ctx      context.Context
 }
 
-type TokenBalanceJson struct {
+type tokenBalanceJson struct {
 	Contract string `json:"token,omitempty"`
 	Wallet   string `json:"wallet,omitempty"`
 	Name     string `json:"name,omitempty"`

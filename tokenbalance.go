@@ -3,7 +3,6 @@ package tokenbalance
 import (
 	"bytes"
 	"context"
-	"encoding/json"
 	"errors"
 	"fmt"
 	"github.com/ethereum/go-ethereum/common"
@@ -18,12 +17,12 @@ var (
 	VERSION string
 )
 
-func New(contract, wallet string) (*TokenBalance, error) {
+func New(contract, wallet string) (*tokenBalance, error) {
 	var err error
 	if conn == nil {
 		return nil, errors.New("geth server connection has not been created")
 	}
-	tb := &TokenBalance{
+	tb := &tokenBalance{
 		Contract: common.HexToAddress(contract),
 		Wallet:   common.HexToAddress(wallet),
 		Decimals: 0,
@@ -46,28 +45,34 @@ func log(message string, error bool) {
 
 func (c *Config) Connect() error {
 	var err error
-	conn, err = ethclient.Dial(c.GethLocation)
-	config = c
-	if err != nil {
-		log(fmt.Sprintf("Failed to connect to the Ethereum client: %v\n", err), true)
-	} else {
-		log(fmt.Sprintf("Connected to Geth at: %v\n", c.GethLocation), false)
+	if c.GethLocation == "" {
+		return errors.New("geth endpoint has not been set")
 	}
+	conn, err = ethclient.Dial(c.GethLocation)
+	if err != nil {
+		return err
+	}
+	block, err := conn.BlockByNumber(context.TODO(), nil)
+	if block == nil {
+		return err
+	}
+	config = c
+	log(fmt.Sprintf("Connected to Geth at: %v\n", c.GethLocation), false)
 	return err
 }
 
-func (tb *TokenBalance) ETHString() string {
+func (tb *tokenBalance) ETHString() string {
 	return BigIntString(tb.ETH, 18)
 }
 
-func (tb *TokenBalance) BalanceString() string {
+func (tb *tokenBalance) BalanceString() string {
 	if tb.Decimals == 0 {
 		return "0"
 	}
 	return BigIntString(tb.Balance, tb.Decimals)
 }
 
-func (tb *TokenBalance) query() error {
+func (tb *tokenBalance) query() error {
 	var err error
 
 	token, err := NewTokenCaller(tb.Contract, conn)
@@ -123,8 +128,8 @@ func symbolFix(contract string) string {
 	return "MISSING"
 }
 
-func (tb *TokenBalance) ToJSON() string {
-	jsonData := TokenBalanceJson{
+func (tb *tokenBalance) ToJSON() tokenBalanceJson {
+	jsonData := tokenBalanceJson{
 		Contract: tb.Contract.String(),
 		Wallet:   tb.Wallet.String(),
 		Name:     tb.Name,
@@ -134,8 +139,7 @@ func (tb *TokenBalance) ToJSON() string {
 		Decimals: tb.Decimals,
 		Block:    tb.Block,
 	}
-	data, _ := json.Marshal(jsonData)
-	return string(data)
+	return jsonData
 }
 
 func BigIntString(balance *big.Int, decimals int64) string {
