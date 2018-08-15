@@ -1,4 +1,4 @@
-VERSION=1.53
+VERSION=1.54
 GOBIN=go
 GOGET=$(GOBIN) get
 GOINSTALL=$(GOBIN) install
@@ -20,6 +20,9 @@ install: build
 
 run: build
 	./$(BINARY_NAME)
+
+publish:
+	curl -X POST $(DOCKER)
 
 test:
 	$(GOBIN) test -p 1 -ldflags="-X main.VERSION=$(VERSION)" -coverprofile=coverage.out -v ./...

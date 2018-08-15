@@ -42,3 +42,4 @@ script:
 after_success:
   - travis_wait 30 docker pull karalabe/xgo-latest
   - make release
+  - make publish
