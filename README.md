@@ -1,7 +1,7 @@
 ![TokenBalance](http://i.imgur.com/43Blvht.jpg)
 
 
-# TokenBalance API [![Build Status](https://travis-ci.org/hunterlong/tokenbalance.svg?branch=master)](https://travis-ci.org/hunterlong/tokenbalance) [![Docker Build Status](https://img.shields.io/docker/build/hunterlong/tokenbalance.svg)](https://hub.docker.com/r/hunterlong/tokenbalance/) [![Coverage Status](https://coveralls.io/repos/github/hunterlong/tokenbalance/badge.svg?branch=master)](https://coveralls.io/github/hunterlong/tokenbalance?branch=master)
+# TokenBalance API [![Build Status](https://travis-ci.org/hunterlong/tokenbalance.svg?branch=master)](https://travis-ci.org/hunterlong/tokenbalance) [![Docker Build Status](https://img.shields.io/docker/build/hunterlong/tokenbalance.svg)](https://hub.docker.com/r/hunterlong/tokenbalance/) [![Coverage Status](https://coveralls.io/repos/github/hunterlong/tokenbalance/badge.svg?branch=master)](https://coveralls.io/github/hunterlong/tokenbalance?branch=master) [![GoDoc](https://godoc.org/github.com/golang/gddo?status.svg)](https://godoc.org/github.com/hunterlong/tokenbalance)
 TokenBalance is an easy to use public API and application that will output your [ERC20 Token](https://github.com/ConsenSys/Tokens/blob/master/Token_Contracts/contracts/Token.sol) balance without any troubles. You can run TokenBalance on your local computer or you can use api.tokenbalance.com to easily parse your erc20 token balances.
 Connects to your local geth IPC and prints out a simple JSON response for ethereum token balances. Runs on port *8080* by default if you wish to run locally.
 
@@ -15,8 +15,8 @@ You can view the current status of Token Balance along with API latency informat
 [https://status.tokenbalance.com](https://status.tokenbalance.com)
 
 ## Installing Token Balance
-You don't need to compile Token Balance from source anymore! All you need to do is go to [Releases](https://github.com/hunterlong/tokenbalance/releases/latest) in this repo and download the binary that is built for your OS. 
-Once you've downloaded, rename the file to `tokenbalance` for ease if use. On Mac or Linux move this file with the command `mv tokenbalance /usr/local/bin/tokenbalance`, you should be able to run the application from anywhere now. 
+You don't need to compile Token Balance from source anymore! All you need to do is go to [Releases](https://github.com/hunterlong/tokenbalance/releases/latest) in this repo and download the binary that is built for your OS.
+Once you've downloaded, rename the file to `tokenbalance` for ease if use. On Mac or Linux move this file with the command `mv tokenbalance /usr/local/bin/tokenbalance`, you should be able to run the application from anywhere now.
 
 ## Token Balance and Token Info (/token)
 To fetch information about your balance, token details, and ETH balance use the follow API call in a simple HTTP GET or CURL. The response is in JSON so you can easily parse what you need. Replace TOKEN_ADDRESS with the contract address of the ERC20 token, and replace ETH_ADDRESS with your address.
@@ -91,14 +91,14 @@ func main() {
          Logs:         true,
     }
     configs.Connect()
-    
+
     // insert a Token Contract address and Wallet address
     contract := "0x86fa049857e0209aa7d9e616f7eb3b3b78ecfdb0"
     wallet := "0xbfaa1a1ea534d35199e84859975648b59880f639"
-    
+
     // query the blockchain and wallet details
     token, err := tokenbalance.New(contract, wallet)
-    
+
     // Token Balance will respond back useful things
     token.BalanceString()  // "600000.0"
     token.ETHString()      // "1.020095885777777767"

@@ -49,9 +49,8 @@ func getTokenHandler(w http.ResponseWriter, r *http.Request) {
 	} else {
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
-		json.NewEncoder(w).Encode(query.ToJSON())
+		w.Write([]byte(query.ToJSON()))
 	}
-
 }
 
 func getBalanceHandler(w http.ResponseWriter, r *http.Request) {

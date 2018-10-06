@@ -79,6 +79,7 @@ func TestTokenJson(t *testing.T) {
 	var d tokenBalanceJson
 	json.Unmarshal(rr.Body.Bytes(), &d)
 
+	t.Log(d)
 	assert.Equal(t, "DreamTeam Token", d.Name, "should be token name")
 	assert.Equal(t, "0x17A813dF7322F8AAC5cAc75eB62c0d13B8aea29D", d.Wallet, "should be wallet address")
 	assert.Equal(t, int64(6), d.Decimals, "should be decimals")

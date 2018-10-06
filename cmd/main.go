@@ -1,3 +1,4 @@
+// Package main inside the cmd folder contains TokenBalance binary file for your operating system
 package main
 
 import (

@@ -3,6 +3,7 @@ package tokenbalance
 import (
 	"bytes"
 	"context"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"github.com/ethereum/go-ethereum/common"
@@ -129,7 +130,7 @@ func symbolFix(contract string) string {
 	return "MISSING"
 }
 
-func (tb *tokenBalance) ToJSON() tokenBalanceJson {
+func (tb *tokenBalance) ToJSON() string {
 	jsonData := tokenBalanceJson{
 		Contract: tb.Contract.String(),
 		Wallet:   tb.Wallet.String(),
@@ -140,7 +141,8 @@ func (tb *tokenBalance) ToJSON() tokenBalanceJson {
 		Decimals: tb.Decimals,
 		Block:    tb.Block,
 	}
-	return jsonData
+	d, _ := json.Marshal(jsonData)
+	return string(d)
 }
 
 func BigIntString(balance *big.Int, decimals int64) string {

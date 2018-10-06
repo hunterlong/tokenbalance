@@ -13,13 +13,10 @@ func ExampleNew() {
 	// Output: This wallet has 7.282 StorjToken tokens
 }
 
-// View all information about the token including ETH balance and Token Balance
-func ExampleTokenBalance() {
-	symbol := example.Symbol
-	decimals := example.Decimals
-	balance := example.BalanceString()
-	fmt.Printf("%v token has %v decimals and this wallet has %v of them", symbol, decimals, balance)
-	// Output: STORJ token has 8 decimals and this wallet has 7.282 of them
+// View all token information as JSON
+func ExampleTokenBalance_ToJSON() {
+	data := example.ToJSON()
+	fmt.Println(data)
 }
 
 // Return the Token Balance as a string rather than a *big.Int

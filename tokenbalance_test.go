@@ -81,5 +81,4 @@ func TestNewTokenBalance(t *testing.T) {
 	assert.Equal(t, "1.020095885777777767", tb.ETHString())
 	assert.Equal(t, int64(18), tb.Decimals)
 	assert.Equal(t, "OMG", tb.Symbol)
-	assert.Equal(t, "OMG", tb.ToJSON().Symbol)
 }
