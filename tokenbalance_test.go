@@ -31,34 +31,34 @@ func TestConnection(t *testing.T) {
 
 func TestZeroDecimal(t *testing.T) {
 	number := big.NewInt(123456789)
-	tokenCorrected := BigIntString(number, 0)
+	tokenCorrected := bigIntString(number, 0)
 	assert.Equal(t, "123456789", tokenCorrected)
 }
 
 func TestZeroBalance(t *testing.T) {
 	number := big.NewInt(0)
-	tokenCorrected := BigIntString(number, 18)
+	tokenCorrected := bigIntString(number, 18)
 	assert.Equal(t, "0.0", tokenCorrected)
 }
 
 func TestFormatDecimal(t *testing.T) {
 	number := big.NewInt(0)
 	number.SetString("72094368689712", 10)
-	tokenCorrected := BigIntString(number, 18)
+	tokenCorrected := bigIntString(number, 18)
 	assert.Equal(t, "0.000072094368689712", tokenCorrected)
 }
 
 func TestFormatSmallDecimal(t *testing.T) {
 	number := big.NewInt(0)
 	number.SetString("123", 10)
-	tokenCorrected := BigIntString(number, 18)
+	tokenCorrected := bigIntString(number, 18)
 	assert.Equal(t, "0.000000000000000123", tokenCorrected)
 }
 
 func TestFormatVerySmallDecimal(t *testing.T) {
 	number := big.NewInt(0)
 	number.SetString("1142400000000001", 10)
-	tokenCorrected := BigIntString(number, 18)
+	tokenCorrected := bigIntString(number, 18)
 	assert.Equal(t, "0.001142400000000001", tokenCorrected)
 }
 

@@ -64,14 +64,14 @@ func (c *Config) Connect() error {
 }
 
 func (tb *tokenBalance) ETHString() string {
-	return BigIntString(tb.ETH, 18)
+	return bigIntString(tb.ETH, 18)
 }
 
 func (tb *tokenBalance) BalanceString() string {
 	if tb.Decimals == 0 {
 		return "0"
 	}
-	return BigIntString(tb.Balance, tb.Decimals)
+	return bigIntString(tb.Balance, tb.Decimals)
 }
 
 func (tb *tokenBalance) query() error {
@@ -145,13 +145,13 @@ func (tb *tokenBalance) ToJSON() string {
 	return string(d)
 }
 
-func BigIntString(balance *big.Int, decimals int64) string {
-	amount := BigIntFloat(balance, decimals)
+func bigIntString(balance *big.Int, decimals int64) string {
+	amount := bigIntFloat(balance, decimals)
 	deci := fmt.Sprintf("%%0.%vf", decimals)
 	return clean(fmt.Sprintf(deci, amount))
 }
 
-func BigIntFloat(balance *big.Int, decimals int64) *big.Float {
+func bigIntFloat(balance *big.Int, decimals int64) *big.Float {
 	if balance.Sign() == 0 {
 		return big.NewFloat(0)
 	}
