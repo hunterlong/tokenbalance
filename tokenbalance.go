@@ -76,9 +76,9 @@ func (tb *tokenBalance) BalanceString() string {
 func (tb *tokenBalance) query() error {
 	var err error
 
-	token, err := NewTokenCaller(tb.Contract, conn)
+	token, err := newTokenCaller(tb.Contract, conn)
 	if err != nil {
-		log(fmt.Sprintf("Failed to instantiate a Token contract: %v\n", err), false)
+		log(fmt.Sprintf("Failed to instantiate a token contract: %v\n", err), false)
 		return err
 	}
 

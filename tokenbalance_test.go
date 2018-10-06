@@ -30,6 +30,12 @@ func TestConnection(t *testing.T) {
 }
 
 func TestZeroDecimal(t *testing.T) {
+	number := big.NewInt(123456789)
+	tokenCorrected := BigIntString(number, 0)
+	assert.Equal(t, "123456789", tokenCorrected)
+}
+
+func TestZeroBalance(t *testing.T) {
 	number := big.NewInt(0)
 	tokenCorrected := BigIntString(number, 18)
 	assert.Equal(t, "0.0", tokenCorrected)

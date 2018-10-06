@@ -83,8 +83,8 @@ func TestTokenJson(t *testing.T) {
 	assert.Equal(t, "0x17A813dF7322F8AAC5cAc75eB62c0d13B8aea29D", d.Wallet, "should be wallet address")
 	assert.Equal(t, int64(6), d.Decimals, "should be decimals")
 	assert.Equal(t, "DTT", d.Symbol, "should be symbol")
-	assert.Equal(t, "10000.0", d.Balance, "should be Token balance")
-	assert.Equal(t, "49.999936999999995635", d.ETH, "should be ETH balance")
+	assert.Equal(t, "10000.0", d.Balance, "should be token balance")
+	assert.Equal(t, "49.997629392334026477", d.ETH, "should be ETH balance")
 }
 
 func TestFailingTokenJson(t *testing.T) {
@@ -114,7 +114,7 @@ func TestMainnetTokenJson(t *testing.T) {
 	assert.Equal(t, "0x42D4722B804585CDf6406fa7739e794b0Aa8b1FF", d.Wallet, "should be wallet address")
 	assert.Equal(t, int64(18), d.Decimals, "should be decimals")
 	assert.Equal(t, "OMG", d.Symbol, "should be symbol")
-	assert.Equal(t, "600000.0", d.Balance, "should be Token balance")
+	assert.Equal(t, "600000.0", d.Balance, "should be token balance")
 }
 
 func TestMainnetEOSTokenJson(t *testing.T) {
@@ -128,7 +128,7 @@ func TestMainnetEOSTokenJson(t *testing.T) {
 	assert.Equal(t, "0xbfaA1A1EA534d35199E84859975648B59880f639", d.Wallet, "should be wallet address")
 	assert.Equal(t, int64(18), d.Decimals, "should be decimals")
 	assert.Equal(t, "EOS", d.Symbol, "should be symbol")
-	assert.Equal(t, "8750000.0", d.Balance, "should be Token balance")
+	assert.Equal(t, "8750000.0", d.Balance, "should be token balance")
 }
 
 type tokenBalanceJson struct {
