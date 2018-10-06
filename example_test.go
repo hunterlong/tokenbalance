@@ -2,7 +2,7 @@ package tokenbalance
 
 import "fmt"
 
-var example *tokenBalance
+var example *TokenBalance
 
 // Create a New Token Balance request with the ERC20 contract address and a wallet address
 func ExampleNew() {

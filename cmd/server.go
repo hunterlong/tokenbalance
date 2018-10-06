@@ -18,7 +18,7 @@ func router() *mux.Router {
 }
 
 func startServer(ip string, port int) error {
-	log.Printf("tokenBalance Server Running: http://%v:%v", ip, port)
+	log.Printf("TokenBalance Server Running: http://%v:%v", ip, port)
 	srv := &http.Server{
 		Addr:         fmt.Sprintf("%v:%v", ip, port),
 		WriteTimeout: time.Second * 15,

@@ -11,7 +11,7 @@ type Config struct {
 	Logs         bool
 }
 
-type tokenBalance struct {
+type TokenBalance struct {
 	Contract common.Address
 	Wallet   common.Address
 	Name     string

@@ -18,12 +18,12 @@ var (
 	VERSION string
 )
 
-func New(contract, wallet string) (*tokenBalance, error) {
+func New(contract, wallet string) (*TokenBalance, error) {
 	var err error
 	if config == nil || conn == nil {
 		return nil, errors.New("geth server connection has not been created")
 	}
-	tb := &tokenBalance{
+	tb := &TokenBalance{
 		Contract: common.HexToAddress(contract),
 		Wallet:   common.HexToAddress(wallet),
 		Decimals: 0,
@@ -63,18 +63,18 @@ func (c *Config) Connect() error {
 	return err
 }
 
-func (tb *tokenBalance) ETHString() string {
+func (tb *TokenBalance) ETHString() string {
 	return bigIntString(tb.ETH, 18)
 }
 
-func (tb *tokenBalance) BalanceString() string {
+func (tb *TokenBalance) BalanceString() string {
 	if tb.Decimals == 0 {
 		return "0"
 	}
 	return bigIntString(tb.Balance, tb.Decimals)
 }
 
-func (tb *tokenBalance) query() error {
+func (tb *TokenBalance) query() error {
 	var err error
 
 	token, err := newTokenCaller(tb.Contract, conn)
@@ -130,7 +130,7 @@ func symbolFix(contract string) string {
 	return "MISSING"
 }
 
-func (tb *tokenBalance) ToJSON() string {
+func (tb *TokenBalance) ToJSON() string {
 	jsonData := tokenBalanceJson{
 		Contract: tb.Contract.String(),
 		Wallet:   tb.Wallet.String(),
