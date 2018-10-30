@@ -38,16 +38,15 @@ func getTokenHandler(w http.ResponseWriter, r *http.Request) {
 	contract, wallet := collectVars(r)
 	log.Println("Fetching /token for Wallet:", wallet, "at Contract:", contract)
 	query, err := tb.New(contract, wallet)
+	w.Header().Set("Content-Type", "application/json")
 	if err != nil {
 		m := errorResponse{
 			Error:   true,
 			Message: err.Error(),
 		}
-		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusNotFound)
 		json.NewEncoder(w).Encode(m)
 	} else {
-		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
 		w.Write([]byte(query.ToJSON()))
 	}
@@ -57,12 +56,11 @@ func getBalanceHandler(w http.ResponseWriter, r *http.Request) {
 	contract, wallet := collectVars(r)
 	log.Println("Fetching /balance for Wallet:", wallet, "at Contract:", contract)
 	query, err := tb.New(contract, wallet)
+	w.Header().Set("Content-Type", "text/plain")
 	if err != nil {
-		w.Header().Set("Content-Type", "text/plain")
 		w.WriteHeader(http.StatusNotFound)
 		w.Write([]byte("0.0"))
 	} else {
-		w.Header().Set("Content-Type", "text/plain")
 		w.WriteHeader(http.StatusOK)
 		w.Write([]byte(query.BalanceString()))
 	}

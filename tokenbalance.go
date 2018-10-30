@@ -69,7 +69,7 @@ func (tb *TokenBalance) ETHString() string {
 
 func (tb *TokenBalance) BalanceString() string {
 	if tb.Decimals == 0 {
-		return "0"
+		return tb.Balance.String()
 	}
 	return bigIntString(tb.Balance, tb.Decimals)
 }

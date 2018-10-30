@@ -24,12 +24,12 @@ type TokenBalance struct {
 }
 
 type tokenBalanceJson struct {
-	Contract string `json:"token,omitempty"`
-	Wallet   string `json:"wallet,omitempty"`
+	Contract string `json:"token"`
+	Wallet   string `json:"wallet"`
 	Name     string `json:"name,omitempty"`
 	Symbol   string `json:"symbol,omitempty"`
 	Balance  string `json:"balance"`
-	ETH      string `json:"eth_balance,omitempty"`
-	Decimals int64  `json:"decimals,omitempty"`
-	Block    int64  `json:"block,omitempty"`
+	ETH      string `json:"eth_balance"`
+	Decimals int64  `json:"decimals"`
+	Block    int64  `json:"block"`
 }

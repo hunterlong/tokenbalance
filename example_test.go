@@ -1,6 +1,8 @@
 package tokenbalance
 
-import "fmt"
+import (
+	"fmt"
+)
 
 var example *TokenBalance
 

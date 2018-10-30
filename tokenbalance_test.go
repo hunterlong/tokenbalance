@@ -72,7 +72,18 @@ func TestSymbolFix(t *testing.T) {
 	assert.Equal(t, "EOS", symbol)
 }
 
+func TestTokenBalance_ToJSON(t *testing.T) {
+	symbol := symbolFix("0x86Fa049857E0209aa7D9e616F7eb3b3B78ECfdb0")
+	assert.Equal(t, "EOS", symbol)
+}
+
 func TestNewTokenBalance(t *testing.T) {
+	c := &Config{
+		GethLocation: "https://eth.coinapp.io",
+		Logs:         true,
+	}
+	err := c.Connect()
+	assert.Nil(t, err)
 	tb, err := New("0xd26114cd6EE289AccF82350c8d8487fedB8A0C07", "0x42d4722b804585cdf6406fa7739e794b0aa8b1ff")
 	assert.Nil(t, err)
 	assert.Equal(t, "0x42D4722B804585CDf6406fa7739e794b0Aa8b1FF", tb.Wallet.String())
