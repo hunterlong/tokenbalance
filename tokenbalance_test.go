@@ -3,6 +3,7 @@ package tokenbalance
 import (
 	"github.com/stretchr/testify/assert"
 	"math/big"
+	"os"
 	"testing"
 )
 
@@ -22,7 +23,7 @@ func TestFailingNoConfig(t *testing.T) {
 
 func TestConnection(t *testing.T) {
 	c := &Config{
-		GethLocation: "https://eth.coinapp.io",
+		GethLocation: os.Getenv("ETH"),
 		Logs:         true,
 	}
 	err := c.Connect()
@@ -79,7 +80,7 @@ func TestTokenBalance_ToJSON(t *testing.T) {
 
 func TestNewTokenBalance(t *testing.T) {
 	c := &Config{
-		GethLocation: "https://eth.coinapp.io",
+		GethLocation: os.Getenv("ETH"),
 		Logs:         true,
 	}
 	err := c.Connect()

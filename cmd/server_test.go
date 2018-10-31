@@ -7,6 +7,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"net/http"
 	"net/http/httptest"
+	"os"
 	"testing"
 )
 
@@ -49,7 +50,7 @@ func TestFailedHTTPServer(t *testing.T) {
 
 func TestConfig(t *testing.T) {
 	configs = &tb.Config{
-		GethLocation: "https://ropsten.coinapp.io",
+		GethLocation: os.Getenv("ROPSTEN"),
 		Logs:         true,
 	}
 	err := configs.Connect()
@@ -97,7 +98,7 @@ func TestFailingTokenJson(t *testing.T) {
 
 func TestMainnetConnection(t *testing.T) {
 	configs = &tb.Config{
-		GethLocation: "https://eth.coinapp.io",
+		GethLocation: os.Getenv("ETH"),
 		Logs:         true,
 	}
 	err := configs.Connect()
