@@ -133,6 +133,22 @@ func TestMainnetEOSTokenJson(t *testing.T) {
 	assert.Equal(t, "8750000.0", d.Balance, "should be token balance")
 }
 
+func TestHealthCheck(t *testing.T) {
+	req, err := http.NewRequest("GET", "/health", nil)
+	assert.Nil(t, err)
+	rr := httptest.NewRecorder()
+	router().ServeHTTP(rr, req)
+	var d healthJson
+	json.Unmarshal(rr.Body.Bytes(), &d)
+	assert.Equal(t, true, d.Online)
+	assert.Equal(t, 1, d.Chain)
+}
+
+type healthJson struct {
+	Online bool   `json:"online"`
+	Chain  string `json:"chain"`
+}
+
 type tokenBalanceJson struct {
 	Contract string `json:"token,omitempty"`
 	Wallet   string `json:"wallet,omitempty"`

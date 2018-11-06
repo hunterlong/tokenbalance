@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"github.com/gorilla/mux"
@@ -14,6 +15,7 @@ func router() *mux.Router {
 	r := mux.NewRouter()
 	r.HandleFunc("/balance/{contract}/{wallet}", getBalanceHandler).Methods("GET")
 	r.HandleFunc("/token/{contract}/{wallet}", getTokenHandler).Methods("GET")
+	r.HandleFunc("/health", getHealthHandler)
 	return r
 }
 
@@ -32,6 +34,25 @@ func startServer(ip string, port int) error {
 func collectVars(r *http.Request) (string, string) {
 	vars := mux.Vars(r)
 	return vars["contract"], vars["wallet"]
+}
+
+func getHealthHandler(w http.ResponseWriter, r *http.Request) {
+	var health map[string]interface{}
+	chainId, err := tb.Geth.NetworkID(context.TODO())
+	if err != nil {
+		health = map[string]interface{}{
+			"online": false,
+			"chain":  0,
+		}
+	} else {
+		health = map[string]interface{}{
+			"online": true,
+			"chain":  chainId.Int64(),
+		}
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(health)
 }
 
 func getTokenHandler(w http.ResponseWriter, r *http.Request) {

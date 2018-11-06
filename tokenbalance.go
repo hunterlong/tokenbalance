@@ -13,14 +13,14 @@ import (
 )
 
 var (
-	conn    *ethclient.Client
+	Geth    *ethclient.Client
 	config  *Config
 	VERSION string
 )
 
 func New(contract, wallet string) (*TokenBalance, error) {
 	var err error
-	if config == nil || conn == nil {
+	if config == nil || Geth == nil {
 		return nil, errors.New("geth server connection has not been created")
 	}
 	tb := &TokenBalance{
@@ -58,7 +58,7 @@ func (c *Config) Connect() error {
 		return err
 	}
 	config = c
-	conn = ethConn
+	Geth = ethConn
 	log(fmt.Sprintf("Connected to Geth at: %v\n", c.GethLocation), false)
 	return err
 }
@@ -77,13 +77,13 @@ func (tb *TokenBalance) BalanceString() string {
 func (tb *TokenBalance) query() error {
 	var err error
 
-	token, err := newTokenCaller(tb.Contract, conn)
+	token, err := newTokenCaller(tb.Contract, Geth)
 	if err != nil {
 		log(fmt.Sprintf("Failed to instantiate a token contract: %v\n", err), false)
 		return err
 	}
 
-	block, err := conn.BlockByNumber(tb.ctx, nil)
+	block, err := Geth.BlockByNumber(tb.ctx, nil)
 	if err != nil {
 		log(fmt.Sprintf("Failed to get current block number: %v\n", err), false)
 	}
@@ -96,7 +96,7 @@ func (tb *TokenBalance) query() error {
 	}
 	tb.Decimals = decimals.Int64()
 
-	tb.ETH, err = conn.BalanceAt(tb.ctx, tb.Wallet, nil)
+	tb.ETH, err = Geth.BalanceAt(tb.ctx, tb.Wallet, nil)
 	if err != nil {
 		log(fmt.Sprintf("Failed to get ethereum balance from address: %v \n", tb.Wallet.String()), false)
 	}
