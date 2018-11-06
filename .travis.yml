@@ -11,6 +11,14 @@ sudo: required
 services:
   - docker
 
+go_import_path: github.com/hunterlong/tokenbalance
+
+cache:
+  directories:
+  - $GOPATH/pkg/dep
+  - ~/.cache
+  - $GOPATH/src/github.com/hunterlong/tokenbalance/vendor
+
 before_deploy:
   - git config --local user.name "hunterlong"
   - git config --local user.email "info@socialeck.com"
@@ -32,7 +40,8 @@ deploy:
   skip_cleanup: true
 
 before_script:
-  - make deps
+  - make dev-deps
+  - make dep
 
 script:
   - make install
