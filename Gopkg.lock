@@ -39,7 +39,7 @@
   revision = "504e848d77ea4752b3057b8fb46da0e7f746ccf3"
 
 [[projects]]
-  digest = "1:b921baa10451cbde725895090f454a7aba7174bf1451a79e499a4bd1cb151fa2"
+  digest = "1:157ad8964124f4baaaf6d4d8b6434bc3db1cb43936c7ad665bb73d2b2a0d2c2b"
   name = "github.com/ethereum/go-ethereum"
   packages = [
     ".",
@@ -68,8 +68,8 @@
     "trie",
   ]
   pruneopts = "UT"
-  revision = "477eb0933b9529f7deeccc233cc815fe34a8ea56"
-  version = "v1.8.16"
+  revision = "8bbe72075e4e16442c4e28d999edee12e294329e"
+  version = "v1.8.17"
 
 [[projects]]
   digest = "1:33542eaf895b5489ccfb059502a721f0e8875379da8b3ff60fdd9212d503705c"
@@ -235,21 +235,11 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:c2789211d4035eb0843b85958ecf7cb4a5ea91c2d4decee652c94ce898e433cb"
+  digest = "1:35560529f5721d65f36dc23aa15fbf7306c5091cdc3f29f65881af5031b80cc8"
   name = "golang.org/x/sys"
   packages = ["unix"]
   pruneopts = "UT"
-  revision = "4497e2df6f9e69048a54498c7affbbec3294ad47"
-
-[[projects]]
-  digest = "1:623bd29e39e30952f3a4d5bc07f222c30e30f95813c749d9e8147bbc4293a774"
-  name = "golang.org/x/tools"
-  packages = [
-    "go/ast/astutil",
-    "imports",
-  ]
-  pruneopts = "UT"
-  revision = "be0fcc31ae2332374e800dfff29b721c585b35df"
+  revision = "9b800f95dbbc54abff0acf7ee32d88ba4e328c89"
 
 [[projects]]
   branch = "v2"

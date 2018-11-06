@@ -27,7 +27,7 @@
 
 [[constraint]]
   name = "github.com/ethereum/go-ethereum"
-  version = "1.8.16"
+  version = "1.8.17"
 
 [[constraint]]
   name = "github.com/gorilla/mux"
@@ -43,4 +43,3 @@
 
 [prune]
   go-tests = true
-  unused-packages = true

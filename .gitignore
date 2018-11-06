@@ -1,3 +1,4 @@
 .idea
 tokenbalance
 build
+*.out
