@@ -1,4 +1,4 @@
-VERSION=1.6
+VERSION=1.7
 GOBIN=go
 GOGET=$(GOBIN) get
 GOINSTALL=$(GOBIN) install
@@ -21,8 +21,7 @@ install: build
 run: build
 	./$(BINARY_NAME)
 
-publish:
-	curl -X POST $(DOCKER)
+publish: docker docker-push
 
 test:
 	$(GOBIN) test -p 1 -ldflags="-X main.VERSION=$(VERSION)" -coverprofile=coverage.out -v ./...
@@ -42,8 +41,17 @@ build-all: clean
 	$(XGO) $(BUILDVERSION) --targets=windows-6.0/386 ./cmd
 	$(XGO) --targets=linux/amd64 -ldflags="-X main.VERSION=$VERSION -linkmode external -extldflags -static" -out alpine ./cmd
 
-docker:
-	$(DOCKER) build -t hunterlong/tokenbalance:latest ./cmd
+build-alpine:
+	$(XGO) --targets=linux/amd64 -ldflags="-X main.VERSION=$VERSION -linkmode external -extldflags -static" -out alpine ./cmd
+
+docker: build-alpine
+	docker build --no-cache -t hunterlong/tokenbalance:latest --build-arg VERSION=$(VERSION) ./cmd
+	docker tag hunterlong/tokenbalance:latest hunterlong/tokenbalance:v$(VERSION)
+
+# push the :latest tag to Docker hub
+docker-push:
+	docker push hunterlong/tokenbalance:latest
+	docker push hunterlong/tokenbalance:v$(VERSION)
 
 deps:
 	$(GOGET) github.com/stretchr/testify/assert
