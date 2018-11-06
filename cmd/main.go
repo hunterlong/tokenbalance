@@ -45,23 +45,23 @@ type rootT struct {
 var rootCommand = &cli.Command{
 	Name: "tokenbalance",
 	Desc: "\n      #######################\n" +
-		"           tokenBalance\n" +
+		"           TokenBalance\n" +
 		"      #######################\n\n" +
-		"tokenBalance is an easy to use server that \n" +
+		"TokenBalance is an easy to use server that \n" +
 		"give you your ERC20 token balance without \n" +
 		"any troubles. Connects to your local geth \n" +
 		"IPC and prints out a simple JSON response \n" +
 		"for ethereum token balances.",
 	Argv: func() interface{} { return new(rootT) },
 	Fn: func(ctx *cli.Context) error {
-		ctx.String("To start the tokenbalance server, use command:\ntokenbalance start --geth \"/rootCommand/ethereum/geth.ipc\" --port 8080 --ip 0.0.0.0\n * replace geth location with your own *\n")
+		ctx.String("To start the TokenBalance server, use command:\ntokenbalance start --geth \"/root/ethereum/geth.ipc\" --port 8080 --ip 0.0.0.0\n * replace geth location with your own *\n")
 		return nil
 	},
 }
 
 var startCommand = &cli.Command{
 	Name: "start",
-	Desc: "run the tokenbalance http server",
+	Desc: "run the TokenBalance http server",
 	Argv: func() interface{} { return new(commandArgs) },
 	Fn: func(ctx *cli.Context) error {
 		argv := ctx.Argv().(*commandArgs)
@@ -79,7 +79,7 @@ var startCommand = &cli.Command{
 
 var versionCommand = &cli.Command{
 	Name: "version",
-	Desc: "get the version of tokenbalance server",
+	Desc: "get the version of TokenBalance server",
 	Argv: func() interface{} { return new(rootT) },
 	Fn: func(ctx *cli.Context) error {
 		ctx.String(tb.VERSION + "\n")
