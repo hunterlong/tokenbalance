@@ -78,6 +78,10 @@ docker run -p 8080:8080 -e GETH_SERVER=https://mainnet.infura.io/APIKEY -d hunte
 # Use as Golang Package
 You can use Token Balance as a typical Go Language package if you you like to implement ERC20 functionality into your own application.
 
+```bash
+go get github.com/hunterlong/tokenbalance
+```
+
 ###### First you'll want to connect to your Geth server or IPC
 ```go
 import (
