@@ -21,7 +21,7 @@ install: build
 run: build
 	./$(BINARY_NAME)
 
-publish: docker docker-push
+publish: build-alpine docker docker-push
 
 test:
 	$(GOBIN) test -p 1 -ldflags="-X main.VERSION=$(VERSION)" -coverprofile=coverage.out -v ./...
@@ -44,8 +44,8 @@ build-all: clean
 build-alpine:
 	$(XGO) --targets=linux/amd64 -ldflags="-X main.VERSION=$VERSION -linkmode external -extldflags -static" -out alpine ./cmd
 
-docker: build-alpine
-	docker build --no-cache -t hunterlong/tokenbalance:latest --build-arg VERSION=$(VERSION) ./cmd
+docker:
+	docker build --no-cache -t hunterlong/tokenbalance:latest --build-arg VERSION=$(VERSION) -f ./cmd/Dockerfile .
 	docker tag hunterlong/tokenbalance:latest hunterlong/tokenbalance:v$(VERSION)
 
 # push the :latest tag to Docker hub

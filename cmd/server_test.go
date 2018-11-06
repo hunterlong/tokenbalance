@@ -141,12 +141,12 @@ func TestHealthCheck(t *testing.T) {
 	var d healthJson
 	json.Unmarshal(rr.Body.Bytes(), &d)
 	assert.Equal(t, true, d.Online)
-	assert.Equal(t, 1, d.Chain)
+	assert.Equal(t, int64(1), d.Chain)
 }
 
 type healthJson struct {
-	Online bool   `json:"online"`
-	Chain  string `json:"chain"`
+	Online bool  `json:"online"`
+	Chain  int64 `json:"chain"`
 }
 
 type tokenBalanceJson struct {
